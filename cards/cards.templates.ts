@@ -1,42 +1,18 @@
-// tpyescript version for enum use
+// export const SharingPolicy = {
+//   INHERIT: "inherit",
+//   PUBLIC: "public",
+//   PRIVATE: "private",
+// } as const;
+// export const QuickAccessPolicy = {
+//   ALLOWED: "allowed",
+//   BLOCKED: "blocked",
+//   INHERIT: "inherit",
+// } as const;
 
-// enum SharingPolicy {
-//   INHERIT = "inherit",
-//   PUBLIC = "public",
-//   PRIVATE = "private",
-// }
+import { Card } from "./Card";
+import { QuickAccessPolicy, SharingPolicy } from "./Card.constants";
 
-// enum QuickAccessPolicy {
-//   ALLOWED = "allowed",
-//   BLOCKED = "blocked",
-//   INHERIT = "inherit",
-// }
-
-// // Usage:
-// const card: {
-//   id: string;
-//   sharing: SharingPolicy;
-//   quickAccess: QuickAccessPolicy;
-//   // ...
-// } = {
-//   id: "finding-tickets-en",
-//   sharing: SharingPolicy.INHERIT,
-//   quickAccess: QuickAccessPolicy.ALLOWED,
-//   // ...
-// };
-
-export const SharingPolicy = {
-  INHERIT: "inherit",
-  PUBLIC: "public",
-  PRIVATE: "private",
-};
-export const QuickAccessPolicy = {
-  ALLOWED: "allowed",
-  BLOCKED: "blocked",
-  INHERIT: "inherit",
-};
-
-export const DUMMY_CARDS = [
+export const TEMPLATE_CARDS: Card[] = [
   {
     id: "finding-tickets-en",
     category: "daily-life",

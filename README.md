@@ -17,7 +17,64 @@ pre-written, low-effort messages that reduce friction in real-world interactions
 
 ## Folder Structure
 
+### refactor into something like this:
+
 ```
+new
+src/                      # maybe, maybe not
+  app/                    # expo router (or screens)
+    index.tsx
+    card.tsx
+
+  components/
+    CardView.tsx
+
+  cards/                  # domain folder (important)
+    Card.ts               # model (was models/Card.ts)
+    cards.templates.ts    # shipped defaults
+    cards.store.ts        # state logic
+    cards.storage.ts      # persistence (later)
+
+  hooks/
+    useCards.ts           # optional thin wrapper
+
+  assets/
+  constants/
+
+
+```
+
+Where these things live (very explicit answer)
+
+- Shape → Card.ts
+- Allowed values → Card.constants.ts
+- Default data → cards.templates.ts
+- User state → cards.store.ts
+- Persistence → cards.storage.ts (later)
+- This separation keeps each file mentally cheap.
+
+### older ideas:
+
+```
+new
+src/
+  data/
+    cards.templates.ts      // DUMMY_CARDS live here
+  models/
+    Card.ts                 // type / interface
+  state/
+    cardsStore.ts           // app-level card state
+  storage/
+    cardsStorage.ts         // save/load from device
+  components/
+    CardView.tsx
+  screens/
+    index.tsx
+    card.tsx
+
+
+
+old but useful
 /relay-app
   /app          # screens/pages
   /assets       # Fonts, images, etc.

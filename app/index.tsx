@@ -10,7 +10,7 @@ export default function IndexScreen() {
       {DUMMY_CARDS.map((card) => (
         <Pressable
           key={card.id}
-          onPress={() => router.push(`/card?id=${card.id}`)}
+          onPress={() => router.push(`/card?id=${card.id}`)} //f.erouter.push("/card?id=finding-tickets-en")
           style={{ paddingVertical: 12 }}
         >
           <Text style={{ fontSize: 18 }}>{card.title}</Text>
