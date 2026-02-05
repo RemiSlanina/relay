@@ -1,4 +1,35 @@
-# Welcome to your Expo app 👋
+# Relay. communication shortcuts
+
+## Overview:
+
+pre-written, low-effort messages that reduce friction in real-world interactions
+
+> Relay provides quick, ready-made messages for situations where speaking is difficult or unnecessary.
+>
+> It can be useful during:
+>
+> - autistic shutdowns or burnout
+> - nonverbal or minimally verbal moments
+> - migraines or severe headaches
+> - brain fog (e.g. long COVID, ME/CFS)
+> - sensory overload
+> - post-stroke or temporary speech difficulty
+
+## Folder Structure
+
+```
+/relay-app
+  /app          # screens/pages
+  /assets       # Fonts, images, etc.
+  /components   # Reusable UI (buttons, cards, etc.)
+  /constants    # theme.ts, enums, etc.
+  /hooks        # Custom hooks
+  /scripts      # Build/deploy scripts
+  App.tsx       # Entry point
+
+```
+
+## Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
