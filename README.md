@@ -20,8 +20,35 @@ pre-written, low-effort messages that reduce friction in real-world interactions
 ### refactor into something like this:
 
 ```
-new
-src/                      # maybe, maybe not (not)
+app/                    # expo router (or screens)
+   index.tsx
+   card.tsx              # display a card
+
+components/
+   CardView.tsx
+
+cards/                  # domain folder (important)
+   Card.ts               # model (was models/Card.ts)
+   Cards.constants.ts    # SharingPolicy, QuickAccessPolicy as const
+   cards.templates.ts    # shipped defaults
+   cards.store.ts        # state logic
+   CardsContext.tsx      # turn store into context (TODO)
+   cards.storage.ts      # persistence (later)
+
+hooks/
+   useCards.ts           # optional thin wrapper
+
+assets/
+constants/              # TODO delete leftovers from cards.js and cards.ts
+
+```
+
+#### maybe later: (but not right now)
+
+I could add a src/ later, but don't need it. If I add backend.
+
+```
+src/                      # maybe, maybe not (currently not)
   app/                    # expo router (or screens)
     index.tsx
     card.tsx              # display a card
@@ -34,6 +61,7 @@ src/                      # maybe, maybe not (not)
     Cards.constants.ts    # SharingPolicy, QuickAccessPolicy as const
     cards.templates.ts    # shipped defaults
     cards.store.ts        # state logic
+    CardsContext.tsx      # turn store into context (TODO)
     cards.storage.ts      # persistence (later)
 
   hooks/
@@ -41,7 +69,6 @@ src/                      # maybe, maybe not (not)
 
   assets/
   constants/              # TODO delete leftovers from cards.js and cards.ts
-
 
 ```
 

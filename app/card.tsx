@@ -1,5 +1,6 @@
 import { useCardsStore } from "@/cards/cards.store";
 import CardView from "@/components/CardView";
+import { Text } from "@react-navigation/elements";
 import { useLocalSearchParams } from "expo-router";
 
 export default function CardScreen() {

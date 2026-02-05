@@ -1,5 +1,10 @@
-import { Stack } from "expo-router";
+import { CardsProvider } from "@/cards/CardsContext";
+import { Slot } from "expo-router";
 
 export default function RootLayout() {
-  return <Stack />;
+  return (
+    <CardsProvider>
+      <Slot />
+    </CardsProvider>
+  );
 }
