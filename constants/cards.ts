@@ -25,6 +25,8 @@
 //   // ...
 // };
 
+//  DEPRECATED
+
 export const SharingPolicy = {
   INHERIT: "inherit",
   PUBLIC: "public",
@@ -35,6 +37,8 @@ export const QuickAccessPolicy = {
   BLOCKED: "blocked",
   INHERIT: "inherit",
 };
+
+//  DEPRECATED
 
 export const DUMMY_CARDS = [
   {

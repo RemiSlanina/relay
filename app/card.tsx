@@ -1,14 +1,20 @@
+import { useCardsStore } from "@/cards/cards.store";
 import CardView from "@/components/CardView";
-import { DUMMY_CARDS } from "@/constants/cards";
 import { useLocalSearchParams } from "expo-router";
 
 export default function CardScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { getCardById } = useCardsStore();
 
-  const card = DUMMY_CARDS.find((c) => c.id == id);
+  if (!id) {
+    return <Text>Missing card id.</Text>;
+  }
+
+  const card = getCardById(id);
 
   if (!card) {
     return <Text>Card not found.</Text>;
   }
-  return <CardView card={card}></CardView>;
+
+  return <CardView card={card} />;
 }

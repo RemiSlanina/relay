@@ -1,3 +1,5 @@
+//  DEPRECATED
+
 const SharingPolicy = {
   INHERIT: "inherit",
   PUBLIC: "public",
@@ -9,6 +11,8 @@ const QuickAccessPolicy = {
   BLOCKED: "blocked",
   INHERIT: "inherit",
 };
+
+//  DEPRECATED
 
 export const DUMMY_CARDS = [
   {

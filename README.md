@@ -21,16 +21,17 @@ pre-written, low-effort messages that reduce friction in real-world interactions
 
 ```
 new
-src/                      # maybe, maybe not
+src/                      # maybe, maybe not (not)
   app/                    # expo router (or screens)
     index.tsx
-    card.tsx
+    card.tsx              # display a card
 
   components/
     CardView.tsx
 
   cards/                  # domain folder (important)
     Card.ts               # model (was models/Card.ts)
+    Cards.constants.ts    # SharingPolicy, QuickAccessPolicy as const
     cards.templates.ts    # shipped defaults
     cards.store.ts        # state logic
     cards.storage.ts      # persistence (later)
@@ -39,7 +40,7 @@ src/                      # maybe, maybe not
     useCards.ts           # optional thin wrapper
 
   assets/
-  constants/
+  constants/              # TODO delete leftovers from cards.js and cards.ts
 
 
 ```
@@ -51,7 +52,6 @@ Where these things live (very explicit answer)
 - Default data → cards.templates.ts
 - User state → cards.store.ts
 - Persistence → cards.storage.ts (later)
-- This separation keeps each file mentally cheap.
 
 ### older ideas:
 
