@@ -21,8 +21,9 @@ pre-written, low-effort messages that reduce friction in real-world interactions
 
 ```
 app/                    # expo router (or screens)
-   index.tsx
-   card.tsx              # display a card
+   index.tsx            # list of cards
+   cards/
+      [id].tsx              # display one card
 
 components/
    CardView.tsx

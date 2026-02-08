@@ -13,7 +13,8 @@ export default function IndexScreen() {
         (card) => (
           <Pressable
             key={card.id}
-            onPress={() => router.push(`/card?id=${card.id}`)} //f.erouter.push("/card?id=finding-tickets-en")
+            onPress={() => router.push(`/cards/${card.id}`)}
+            // onPress={() => router.push(`/card?id=${card.id}`)} //f.erouter.push("/card?id=finding-tickets-en")
             style={{ paddingVertical: 12 }}
           >
             <Text style={{ fontSize: 18 }}>{card.title}</Text>
