@@ -12,10 +12,10 @@ export type Card = {
   priority: number;
   lang: string;
   title: string;
-  context: string;
+  disclosureIds?: string[]; // optional, empty by default
   message: string;
-  list: string[];
-  media: any[];
+  list?: string[];
+  media?: any[];
   sharing: SharingPolicyType;
   quickAccess: QuickAccessPolicyType;
   lastEditedAt: string; // ISO date

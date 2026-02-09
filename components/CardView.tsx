@@ -1,19 +1,34 @@
+import { Card } from "@/domain/cards/Card";
+import { useDisclosureStore } from "@/domain/disclosures/DisclosureContext";
 import { StyleSheet, Text, View } from "react-native";
 
-type Card = {
-  title: string;
-  context?: string;
-  message: string;
-  list?: string[];
-};
+// type Card = {
+//   title: string;
+//   disclosureIds?: string;
+//   message: string;
+//   list?: string[];
+// };
 
 export default function CardView({ card }: { card: Card }) {
+  const { getDisclosureById } = useDisclosureStore();
+
   return (
     <View style={styles.cardView}>
       {/* <Text style={styles.cardTitle}>{card.title}</Text> */}
-      {card.context ? (
-        <Text style={styles.cardContext}>{card.context}</Text>
-      ) : null}
+      {/* {card.disclosureIds ? (
+        // <Text style={styles.cardContext}>{card.disclosureIds}</Text>
+        
+      ) : null} */}
+      {card.disclosureIds?.map((id) => {
+        const disclosure = getDisclosureById(id);
+        if (!disclosure) return null;
+
+        return (
+          <Text key={id} style={styles.cardDisclosure}>
+            {disclosure.text}
+          </Text>
+        );
+      })}
       <Text style={styles.cardMessage}>{card.message}</Text>
 
       {card.list && card.list.length > 0 ? (
@@ -27,7 +42,7 @@ export default function CardView({ card }: { card: Card }) {
 
     //   <Text key={card.id} style={styles.heading}>
     //     {card.title}
-    //     {card.context}
+    //     {card.disclosureIds}
     //     {card.message}
     //    {card.list}
     //   </Text>
@@ -43,7 +58,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     padding: 12,
   },
-  cardContext: { fontSize: 16, fontWeight: 400, padding: 12 },
+  cardDisclosure: { fontSize: 16, fontWeight: 400, padding: 12 },
   cardMessage: {
     fontSize: 28,
     fontWeight: 300,

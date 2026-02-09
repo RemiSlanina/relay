@@ -9,13 +9,17 @@
 //   );
 // }
 
-import { CardsProvider } from "@/cards/CardsContext";
+import { CardsStoreProvider } from "@/domain/cards/CardsContext";
+import { DisclosureStoreProvider } from "@/domain/disclosures/DisclosureContext";
 import { Stack } from "expo-router";
 
 export default function RootLayout() {
+  // {console.log("RootLayout rendered")}
   return (
-    <CardsProvider>
-      <Stack />
-    </CardsProvider>
+    <CardsStoreProvider>
+      <DisclosureStoreProvider>
+        <Stack />
+      </DisclosureStoreProvider>
+    </CardsStoreProvider>
   );
 }

@@ -1,5 +1,5 @@
-import { useCardsStore } from "@/cards/cards.store";
 import CardView from "@/components/CardView";
+import { useCardsStore } from "@/domain/cards/cards.store";
 import { Text } from "@react-navigation/elements";
 import { useLocalSearchParams } from "expo-router";
 

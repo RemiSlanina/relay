@@ -1,4 +1,4 @@
-import { useCardsStore } from "@/cards/cards.store";
+import { useCardsStore } from "@/domain/cards/cards.store";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 

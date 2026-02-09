@@ -1,4 +1,4 @@
-//TODO
+// fix bug (STACK)
 import { createContext, useContext, useState } from "react";
 import { Card } from "./Card";
 import { TEMPLATE_CARDS } from "./cards.templates";
@@ -12,7 +12,11 @@ type CardsContextValue = {
 
 const CardsContext = createContext<CardsContextValue | null>(null);
 
-export function CardsProvider({ children }: { children: React.ReactNode }) {
+export function CardsStoreProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [cards, setCards] = useState<Card[]>(TEMPLATE_CARDS);
 
   function getCardById(id: string) {

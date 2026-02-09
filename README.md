@@ -20,28 +20,114 @@ pre-written, low-effort messages that reduce friction in real-world interactions
 ### refactor into something like this:
 
 ```
-app/                    # expo router (or screens)
-   index.tsx            # list of cards
-   cards/
-      [id].tsx              # display one card
+
+app/
+  index.tsx
+  _layout.tsx
+  cards/
+    [id].tsx
 
 components/
-   CardView.tsx
+  CardView.tsx
 
-cards/                  # domain folder (important)
-   Card.ts               # model (was models/Card.ts)
-   Cards.constants.ts    # SharingPolicy, QuickAccessPolicy as const
-   cards.templates.ts    # shipped defaults
-   cards.store.ts        # state logic
-   CardsContext.tsx      # turn store into context (TODO)
-   cards.storage.ts      # persistence (later)
+domain/
+  cards/
+    Card.ts
+    card.constants.ts
+    card.templates.ts
+    card.store.ts          # deprecated, TODO delete
+    CardsContext.tsx       # Provider
+    card.storage.ts
+
+  disclosures/            # context is now disclosure, to avoid naming conflicts
+    Disclosure.ts
+    disclosure.templates.ts
+    disclosure.store.ts     # deprecated, TODO delete
+    DisclosureContext.ts    # Provider
+    disclosure.storage.ts
+
+  card-sets/
+    card-set.storage.ts
+    card-set.template.ts
+    CardSet.ts
 
 hooks/
-   useCards.ts           # optional thin wrapper
+  useCards.ts
 
 assets/
 constants/              # TODO delete leftovers from cards.js and cards.ts
+  cards.js              # deprecated, TODO delete
+  cards.ts              # deprecated, TODO delete
 
+```
+
+## ideas
+
+for Card.ts and stuff:
+
+```
+type Card = {
+  id: string
+  title: string
+  message: string
+  contextIds?: string[]   // optional, empty by default
+  category: Category
+  ...
+}
+
+```
+
+Set.ts or CardSet.ts:
+
+```
+type CardSet = {
+  id: string
+  title: string
+  cardIds?: string[]        // explicit picks
+  categories?: Category[]  // OR implicit filter
+  isDefault?: boolean
+}
+```
+
+Then it becomes a user-created context.
+You don’t need a special case.
+user creates a new context
+assigns it to one card
+doesn’t reuse it
+Same system. No branching logic.
+
+Context.ts:
+
+```
+contexts?: {
+  id: string
+  label?: string        // optional, for UI like "Work", "Private"
+  text: string          // what gets shown
+  sensitive?: boolean   // default false
+}[]
+```
+
+context template examples:
+“I’m having a health issue.”
+“I’m autistic and overwhelmed.” (sensitive)
+“I’m in a nonverbal phase.”
+“Neurological issue, temporary.”
+
+card.templates example:
+
+```
+{
+  id: "cant-speak-en",
+  category: "capacity",
+  title: "Can't speak",
+  message: "I can’t speak right now.",
+  contextIds: [
+    "health", "autism" ,
+  ],
+  sharing: SharingPolicy.INHERIT,
+  quickAccess: QuickAccessPolicy.ALLOWED,
+  source: "template",
+}
 ```
 
 #### maybe later: (but not right now)
