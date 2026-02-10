@@ -61,8 +61,8 @@ export const TEMPLATE_CARDS: Card[] = [
     category: "daily-life",
     priority: 1,
     lang: "en",
-    title: ["work", "private"],
-    disclosureIds: "I have a migraine. I am overwhelmed.",
+    title: "Migraine",
+    disclosureIds: ["health"],
     message:
       "Please be patient and speak quietly. Turn down the lights if possible.",
     list: [],
