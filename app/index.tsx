@@ -1,10 +1,10 @@
-import { useCardsStore } from "@/domain/cards/cards.store";
+import { useCards } from "@/domain/cards/CardsContext";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function IndexScreen() {
   const router = useRouter();
-  const { cards } = useCardsStore();
+  const { cards } = useCards();
   return (
     <View style={styles.container}>
       <Text>Cards</Text>

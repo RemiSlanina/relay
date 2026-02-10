@@ -9,7 +9,7 @@ export type QuickAccessPolicyType =
 export type Category =
   | "capacity"
   | "boundaries"
-  | "low-conflict phrasing"
+  | "low-conflict"
   | "tasks"
   | "medical"
   | "work"

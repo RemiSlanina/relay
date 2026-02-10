@@ -1,11 +1,11 @@
 import CardView from "@/components/CardView";
-import { useCardsStore } from "@/domain/cards/cards.store";
+import { useCards } from "@/domain/cards/CardsContext";
 import { Text } from "@react-navigation/elements";
 import { useLocalSearchParams } from "expo-router";
 
 export default function CardScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { getCardById } = useCardsStore();
+  const { getCardById } = useCards();
 
   if (!id) {
     return <Text>Missing card id.</Text>;

@@ -12,11 +12,7 @@ type CardsContextValue = {
 
 const CardsContext = createContext<CardsContextValue | null>(null);
 
-export function CardsStoreProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function CardsProvider({ children }: { children: React.ReactNode }) {
   const [cards, setCards] = useState<Card[]>(TEMPLATE_CARDS);
 
   function getCardById(id: string) {
@@ -39,10 +35,10 @@ export function CardsStoreProvider({
   );
 }
 
-export function useCardsStore() {
+export function useCards() {
   const ctx = useContext(CardsContext);
   if (!ctx) {
-    throw new Error("useCardsStore must be used inside CardsProvider");
+    throw new Error("useCards must be used inside CardsProvider");
   }
   return ctx;
 }

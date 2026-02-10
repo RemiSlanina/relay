@@ -1,5 +1,5 @@
 import { Card } from "@/domain/cards/Card";
-import { useDisclosureStore } from "@/domain/disclosures/DisclosureContext";
+import { useDisclosure } from "@/domain/disclosures/DisclosureContext";
 import { StyleSheet, Text, View } from "react-native";
 
 // type Card = {
@@ -10,7 +10,7 @@ import { StyleSheet, Text, View } from "react-native";
 // };
 
 export default function CardView({ card }: { card: Card }) {
-  const { getDisclosureById } = useDisclosureStore();
+  const { getDisclosureById } = useDisclosure();
 
   return (
     <View style={styles.cardView}>

@@ -65,11 +65,27 @@ constants/              # TODO delete leftovers from cards.js and cards.ts
 
 Do usability first:
 
-- navigation
+- navigation (stack currently)
 - selection
 - display
 - text scaling
 - maybe haptic feedback, maybe not
+- hide button
+- sets
+- set templates
+- editing features
+- saving cards
+- saving disclosures
+- saving sets
+- add styles
+- adding themes (dark, light, at least)
+- add intro/setup funnel (how to use)
+- add media (qr, photos)
+- add language button and switch language button?
+- decide on how many languages to ship (?)
+- card sharing and optional accounts (database)
+- lockscreen access
+- important before shipping: add PRIVACY features, legal notes, disclosure
 
 ## Authority violence/misunderstanding:
 

@@ -2,14 +2,14 @@ import { createContext, useContext, useState } from "react";
 import { Disclosure } from "./Disclosure";
 import { DISCLOSURE_TEMPLATES } from "./disclosure.templates";
 
-type DisclosureStoreValue = {
+type DisclosureValue = {
   disclosures: Disclosure[];
   getDisclosureById: (id: string) => Disclosure | undefined;
 };
 
-const DisclosureStoreContext = createContext<DisclosureStoreValue | null>(null);
+const DisclosureContext = createContext<DisclosureValue | null>(null);
 
-export function DisclosureStoreProvider({
+export function DisclosureProvider({
   children,
 }: {
   children: React.ReactNode;
@@ -21,18 +21,16 @@ export function DisclosureStoreProvider({
   }
 
   return (
-    <DisclosureStoreContext.Provider value={{ disclosures, getDisclosureById }}>
+    <DisclosureContext.Provider value={{ disclosures, getDisclosureById }}>
       {children}
-    </DisclosureStoreContext.Provider>
+    </DisclosureContext.Provider>
   );
 }
 
-export function useDisclosureStore() {
-  const ctx = useContext(DisclosureStoreContext);
+export function useDisclosure() {
+  const ctx = useContext(DisclosureContext);
   if (!ctx) {
-    throw new Error(
-      "useDisclosureStore must be used inside DisclosureStoreProvider",
-    );
+    throw new Error("useDisclosure must be used inside DisclosureProvider");
   }
   return ctx;
 }
