@@ -6,6 +6,15 @@ export type SharingPolicyType =
 export type QuickAccessPolicyType =
   (typeof QuickAccessPolicy)[keyof typeof QuickAccessPolicy];
 
+export type Category =
+  | "capacity"
+  | "boundaries"
+  | "low-conflict phrasing"
+  | "tasks"
+  | "medical"
+  | "work"
+  | "family";
+
 export type Card = {
   id: string;
   category: string;

@@ -1,4 +1,5 @@
 import { Disclosure } from "./Disclosure";
+// optional context for a card.
 
 export const DISCLOSURE_TEMPLATES: Disclosure[] = [
   {

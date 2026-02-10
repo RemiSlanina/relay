@@ -4,7 +4,7 @@
 
 pre-written, low-effort messages that reduce friction in real-world interactions
 
-> Relay provides quick, ready-made messages for situations where speaking is difficult or unnecessary.
+> Relay provides quick, ready-made messages for situations where speaking is difficult or showing cards is easier.
 >
 > It can be useful during:
 >
@@ -61,73 +61,30 @@ constants/              # TODO delete leftovers from cards.js and cards.ts
 
 ```
 
+## TODO
+
+Do usability first:
+
+- navigation
+- selection
+- display
+- text scaling
+- maybe haptic feedback, maybe not
+
+## Authority violence/misunderstanding:
+
+All built-in templates describe the user’s state or capacity.
+None instruct, refuse, or challenge the other person.
+
 ## ideas
 
-for Card.ts and stuff:
+### IDs for cards: template vs user:
+
+prefix tpl vs usr
 
 ```
-type Card = {
-  id: string
-  title: string
-  message: string
-  contextIds?: string[]   // optional, empty by default
-  category: Category
-  ...
-}
-
-```
-
-Set.ts or CardSet.ts:
-
-```
-type CardSet = {
-  id: string
-  title: string
-  cardIds?: string[]        // explicit picks
-  categories?: Category[]  // OR implicit filter
-  isDefault?: boolean
-}
-```
-
-Then it becomes a user-created context.
-You don’t need a special case.
-user creates a new context
-assigns it to one card
-doesn’t reuse it
-Same system. No branching logic.
-
-Context.ts:
-
-```
-contexts?: {
-  id: string
-  label?: string        // optional, for UI like "Work", "Private"
-  text: string          // what gets shown
-  sensitive?: boolean   // default false
-}[]
-```
-
-context template examples:
-“I’m having a health issue.”
-“I’m autistic and overwhelmed.” (sensitive)
-“I’m in a nonverbal phase.”
-“Neurological issue, temporary.”
-
-card.templates example:
-
-```
-{
-  id: "cant-speak-en",
-  category: "capacity",
-  title: "Can't speak",
-  message: "I can’t speak right now.",
-  contextIds: [
-    "health", "autism" ,
-  ],
-  sharing: SharingPolicy.INHERIT,
-  quickAccess: QuickAccessPolicy.ALLOWED,
-  source: "template",
-}
+tpl:cannot-speak-en
+usr:9f3a2c4e
 ```
 
 #### maybe later: (but not right now)
