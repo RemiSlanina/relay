@@ -30,6 +30,12 @@
 // Use a toggle in settings to "Show all templates" or "Show only my cards."
 // Implement a simple search bar to filter cards by title, category, set or message.
 
+// tone => tones[] (later, perhaps, currently not feasible):
+//   tones: {
+//     minimal: "...",
+//     formal: "..."
+//   }
+
 // ----------------------------------------------------------------------
 
 // export const SharingPolicy = {
@@ -61,6 +67,74 @@ import { Card } from "./Card";
 import { QuickAccessPolicy, SharingPolicy } from "./Card.constants";
 
 export const TEMPLATE_CARDS: Card[] = [
+  // ─────────────────────────────
+  // Explanations / Apology
+  // ─────────────────────────────
+
+  {
+    id: "tpl:sorry-1-en-minimal",
+    category: "tasks",
+    priority: 0,
+    disclosureIds: ["nonverbal"],
+    lang: "en",
+    title: "Saying sorry (brief)",
+    message: "Sorry.",
+    sharing: SharingPolicy.PRIVATE,
+    quickAccess: QuickAccessPolicy.BLOCKED,
+    intent: "saying sorry",
+    tone: "minimal",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  {
+    id: "tpl:sorry-1-en-neutral",
+    category: "tasks",
+    priority: 0,
+    disclosureIds: ["nonverbal"],
+    lang: "en",
+    title: "Saying sorry (neutral)",
+    message: "Sorry. This was not my intention – I am overwhelmed.",
+    sharing: SharingPolicy.PRIVATE,
+    quickAccess: QuickAccessPolicy.BLOCKED,
+    intent: "saying sorry",
+    tone: "neutral",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  {
+    id: "tpl:sorry-1-en-formal",
+    category: "tasks",
+    priority: 0,
+    disclosureIds: ["nonverbal"],
+    lang: "en",
+    title: "Saying sorry (formal)",
+    message:
+      "I am sorry.  This was not my intention – I am merely overwhelmed.",
+    sharing: SharingPolicy.PRIVATE,
+    quickAccess: QuickAccessPolicy.BLOCKED,
+    intent: "saying sorry",
+    tone: "formal",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  {
+    id: "tpl:eye-contact-fail-1-en",
+    category: "capacity",
+    priority: 0,
+    lang: "en",
+    title: "Apologizing - eye contact",
+    message: "Sorry. Eye contact is difficult for me.",
+    sharing: SharingPolicy.PRIVATE,
+    quickAccess: QuickAccessPolicy.BLOCKED,
+    intent: "apologizing - eye contact",
+    tone: "explanatory",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
   // ─────────────────────────────
   //            Misc
   // ─────────────────────────────
@@ -194,41 +268,6 @@ export const TEMPLATE_CARDS: Card[] = [
     quickAccess: QuickAccessPolicy.ALLOWED,
     intent: "help with pet medication",
     tone: "neutral",
-    lastEditedAt: "2026-02-12",
-    source: "template",
-  },
-
-  // ─────────────────────────────
-  // Explanations / Apology
-  // ─────────────────────────────
-
-  {
-    id: "tpl:sorry-1-en",
-    category: "family",
-    priority: 0,
-    disclosureIds: ["nonverbal"],
-    lang: "en",
-    title: "Saying sorry",
-    message: "Sorry.",
-    sharing: SharingPolicy.PRIVATE,
-    quickAccess: QuickAccessPolicy.BLOCKED,
-    intent: "saying sorry",
-    tone: "minimal",
-    lastEditedAt: "2026-02-12",
-    source: "template",
-  },
-
-  {
-    id: "tpl:eye-contact-fail-1-en",
-    category: "capacity",
-    priority: 0,
-    lang: "en",
-    title: "Apologizing - eye contact",
-    message: "Sorry. Eye contact is difficult for me.",
-    sharing: SharingPolicy.PRIVATE,
-    quickAccess: QuickAccessPolicy.BLOCKED,
-    intent: "apologizing - eye contact",
-    tone: "explanatory",
     lastEditedAt: "2026-02-12",
     source: "template",
   },
