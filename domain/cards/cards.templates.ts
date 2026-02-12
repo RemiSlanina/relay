@@ -1,3 +1,37 @@
+// 1. Default Starter Set
+// To avoid overwhelm, start with a small, curated default set (5–7 cards) that covers the most common/urgent scenarios. For example:
+// Sensory overload warning (tpl:sensory-overload-1-en)
+// Ordering coffee (tpl:ordering-coffee-1-en)
+// Need time (tpl:capacity-time-en)
+// Medical disclosure (tpl:medical-need-1-en)
+// Overwhelmed (tpl:capacity-overwhelmed-en)
+// Boundaries: stop (tpl:boundaries-stop-en)
+// Grocery list (tpl:grocery-list-en)
+
+// + a Button with ""Show More" Option"
+// 2. "Show More" Option
+// Group the remaining cards by category (e.g., "Medical," "Work," "Family") and offer a "Show more" button in each category.
+// Allow users to search or filter by category, priority, or keyword (e.g., "coffee," "boundaries").
+// Consider a "Recommended for You" section based on usage patterns (e.g., if someone frequently uses food-ordering cards, suggest similar templates).
+
+// 3. Onboarding Flow
+// During first-time setup, ask users to select 3–5 cards from a shortlist to add to their quick-access toolbar.
+// Offer a one-tap option to "Load all templates" for users who want everything upfront.
+
+// 4. Customization Hints
+// Add a tooltip or placeholder in the UI for editable fields (e.g., "Tap to add your own items" for grocery lists).
+// For cards with list fields, pre-fill with common examples (e.g., "Milk, Bread, Eggs") but make it easy to clear or edit.
+
+// 5. Visual Organization
+// Use icons or colors to distinguish categories (e.g., red for emergencies, blue for tasks).
+// For quick access, swipeable toolbar or home screen widget (if technically feasible).
+
+// 6. Other:
+// Use a toggle in settings to "Show all templates" or "Show only my cards."
+// Implement a simple search bar to filter cards by title, category, set or message.
+
+// ----------------------------------------------------------------------
+
 // export const SharingPolicy = {
 //   INHERIT: "inherit",
 //   PUBLIC: "public",
@@ -11,6 +45,7 @@
 
 // export type Category =
 //   | "capacity"
+//   | "support"
 //   | "boundaries"
 //   | "low-conflict-phrasing"
 //   | "tasks"
@@ -18,10 +53,250 @@
 //   | "work"
 //   | "family";
 
+// Tone is about how it SOUNDS, not how serious it is.
+
+// Priority: Use 0 for urgent/emergency cards, 1 for common tasks.
+
 import { Card } from "./Card";
 import { QuickAccessPolicy, SharingPolicy } from "./Card.constants";
 
 export const TEMPLATE_CARDS: Card[] = [
+  // ─────────────────────────────
+  //            Misc
+  // ─────────────────────────────
+
+  // Sensory Overload
+  {
+    id: "tpl:sensory-overload-1-en",
+    category: "capacity",
+    priority: 0,
+    lang: "en",
+    title: "Sensory overload warning",
+    message:
+      "I’m experiencing sensory overload. I may need to step away or take a break.",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "sensory overload",
+    tone: "minimal",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  // Social Boundaries
+  {
+    id: "tpl:no-eye-contact-1-en",
+    category: "capacity",
+    priority: 0,
+    lang: "en",
+    title: "No eye contact needed",
+    message:
+      "I communicate better without eye contact. Please don’t take it personally.",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "eye contact",
+    tone: "neutral",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  // Executive Dysfunction
+  {
+    id: "tpl:decision-fatigue-1-en",
+    category: "capacity",
+    priority: 1,
+    lang: "en",
+    title: "Decision help",
+    message: "I’m having trouble deciding. Could you suggest 1–2 options?",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "decision help",
+    tone: "neutral",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  // Public Transport
+  {
+    id: "tpl:transport-help-1-en",
+    category: "tasks",
+    priority: 1,
+    lang: "en",
+    title: "Asking for directions",
+    message:
+      "Could you point me to the nearest exit/quiet area? I’m feeling overwhelmed.",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "asking for directions",
+    tone: "formal",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  // Transportation
+  {
+    id: "tpl:help-with-luggage-seat-1-en",
+    category: "support",
+    priority: 1,
+    lang: "en",
+    title: "Help with luggage/seat",
+    message: "I need help with my luggage/seat.",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "help with luggage/seat",
+    tone: "neutral",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  // Social Scripts
+  {
+    id: "tpl:conversation-processing-time-1-en",
+    category: "capacity",
+    priority: 1,
+    lang: "en",
+    title: "Conversation processing time",
+    message:
+      "I’d like to join the conversation, but I need a moment to process.",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "time to process",
+    tone: "neutral",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  // Tech Support
+  {
+    id: "tpl:tech-device-1-en",
+    category: "support",
+    priority: 1,
+    lang: "en",
+    title: "Tech device support [device]", // if feasible, auto update [device] later
+    message:
+      "I’m having trouble with [device]. Could you guide me step by step?",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "get tech support [device]", // if feasible, auto update [device] later
+    tone: "neutral",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  // Pet Care
+  {
+    id: "tpl:pet-care-1-en",
+    category: "support",
+    priority: 1,
+    lang: "en",
+    title: "Pet Care",
+    message: "My pet needs medication. Here’s the schedule: [list].",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "help with pet medication",
+    tone: "neutral",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  // ─────────────────────────────
+  // Explanations / Apology
+  // ─────────────────────────────
+
+  {
+    id: "tpl:sorry-1-en",
+    category: "family",
+    priority: 0,
+    disclosureIds: ["nonverbal"],
+    lang: "en",
+    title: "Saying sorry",
+    message: "Sorry.",
+    sharing: SharingPolicy.PRIVATE,
+    quickAccess: QuickAccessPolicy.BLOCKED,
+    intent: "saying sorry",
+    tone: "minimal",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  {
+    id: "tpl:eye-contact-fail-1-en",
+    category: "capacity",
+    priority: 0,
+    lang: "en",
+    title: "Apologizing - eye contact",
+    message: "Sorry. Eye contact is difficult for me.",
+    sharing: SharingPolicy.PRIVATE,
+    quickAccess: QuickAccessPolicy.BLOCKED,
+    intent: "apologizing - eye contact",
+    tone: "explanatory",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  // ─────────────────────────────
+  // Ordering food and drink
+  // ─────────────────────────────
+
+  {
+    id: "tpl:ordering-coffee-1-en",
+    category: "tasks",
+    priority: 1,
+    lang: "en",
+    title: "Ordering coffee",
+    message: "Hello, an espresso with a glass of water, please.",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "ordering espresso",
+    tone: "formal",
+    lastEditedAt: "2026-01-30",
+    source: "template",
+  },
+
+  {
+    id: "tpl:ordering-hamburger-1-en",
+    category: "tasks",
+    priority: 1,
+    lang: "en",
+    title: "Ordering hamburger + salad",
+    message: "Hello, could I get some water, a hamburger and a salad, please?",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "eye contact",
+    tone: "formal",
+    lastEditedAt: "2026-01-30",
+    source: "template",
+  },
+
+  {
+    id: "tpl:ordering-coffee-2-en",
+    category: "tasks",
+    priority: 1,
+    lang: "en",
+    title: "Ordering coffee",
+    message: "Hello, a latte with soy milk, please.",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "ordering cafe latte",
+    tone: "formal",
+    lastEditedAt: "2026-01-30",
+    source: "template",
+  },
+
+  {
+    id: "tpl:ordering-pizza-1-en",
+    category: "tasks",
+    priority: 1,
+    lang: "en",
+    title: "Ordering pizza",
+    message: "I'd like a pizza margherita and a glass of water, please.",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "ordering pizza default",
+    tone: "formal",
+    lastEditedAt: "2026-01-30",
+    source: "template",
+  },
+
   // ─────────────────────────────
   // capacity / time / processing
   // ─────────────────────────────
@@ -36,6 +311,24 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "This may take a moment.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "need time",
+    tone: "minimal",
+    lastEditedAt: "2026-01-30",
+    source: "template",
+  },
+
+  {
+    id: "tpl:capacity-documents-en",
+    category: "capacity",
+    priority: 1,
+    lang: "en",
+    disclosureIds: ["work", "private"],
+    title: "Finding documents",
+    message: "I have valid documents. This may take a moment.",
+    sharing: SharingPolicy.INHERIT,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "finding documents",
+    tone: "formal",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -46,10 +339,12 @@ export const TEMPLATE_CARDS: Card[] = [
     priority: 1,
     lang: "en",
     disclosureIds: ["work", "private"],
-    title: "Finding ticket / documents",
-    message: "I have valid documents. This may take a moment.",
+    title: "Finding ticket ",
+    message: "I have a valid ticket. This may take a moment.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "finding a ticket",
+    tone: "formal",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -63,6 +358,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I’m having difficulty speaking right now.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "can't speak",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -76,6 +373,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I’m having difficulty processing information.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "can’t process information",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -89,6 +388,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I’m overwhelmed and need time.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "overwhelmed",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -102,6 +403,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I can listen, but responding is difficult right now.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "listening only",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -119,6 +422,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I’m safe, but I’m unwell.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "unwell (brief)",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -132,6 +437,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "This will pass. I need time.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "temporary condition needing time",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -145,12 +452,31 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I’m dealing with a neurological issue.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "health disclosure (brief)",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
 
+  // Medical/Access Needs
+  {
+    id: "tpl:medical-need-1-en",
+    category: "medical",
+    priority: 0,
+    lang: "en",
+    title: "Medical disclosure",
+    message:
+      "I have a chronic illness. I may need to sit/leave suddenly. Thank you for understanding.",
+    sharing: SharingPolicy.PRIVATE,
+    quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "explanatory",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
   // ─────────────────────────────
-  // Work / public-facing
+  //    Work / public-facing
   // ─────────────────────────────
 
   {
@@ -162,6 +488,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I’m having a health issue and need a pause.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "formal",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -175,6 +503,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I’ll respond as soon as I can.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -188,6 +518,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I’m not available for discussion right now.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -205,6 +537,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "Water would help.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "minimal",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -222,6 +556,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I don’t need emergency services.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "formal",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -237,12 +573,14 @@ export const TEMPLATE_CARDS: Card[] = [
     list: ["asthma", "diabetes", "MCAS"],
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "formal",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
 
   // ─────────────────────────────
-  // Explanations / descriptive
+  // Explanations / descriptive (internal note: having police, authority in mind)
   // ─────────────────────────────
 
   {
@@ -254,6 +592,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I’m overwhelmed and having difficulty processing instructions.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "explanatory",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -267,6 +607,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I have a disability that affects communication.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "explanatory",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -280,6 +622,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I have valid documents. I need time to locate them.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "explanatory",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -293,13 +637,15 @@ export const TEMPLATE_CARDS: Card[] = [
     category: "family",
     priority: 1,
     lang: "en",
-    title: "What's wrong?",
+    title: "Asking what's wrong?",
     disclosureIds: ["work", "private"],
     message: "What's wrong?",
     list: [],
     media: [],
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -315,6 +661,8 @@ export const TEMPLATE_CARDS: Card[] = [
     media: [],
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "minimal",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -330,6 +678,8 @@ export const TEMPLATE_CARDS: Card[] = [
     media: [],
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "minimal",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -347,6 +697,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I’m overwhelmed and I don’t want this.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "urgent",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -359,6 +711,8 @@ export const TEMPLATE_CARDS: Card[] = [
     message: "I am overwhelmed! Please stop!",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "urgent",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -373,6 +727,8 @@ export const TEMPLATE_CARDS: Card[] = [
       "Please stop! Silence is not consent. I am overwhelmed and I want you to stop.",
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "urgent",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -393,6 +749,8 @@ export const TEMPLATE_CARDS: Card[] = [
     media: [],
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -409,6 +767,8 @@ export const TEMPLATE_CARDS: Card[] = [
     media: [],
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "urgent",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -417,7 +777,7 @@ export const TEMPLATE_CARDS: Card[] = [
     category: "tasks",
     priority: 1,
     lang: "en",
-    title: "Emergency : Pets", // for hospital/emergencies
+    title: "Emergency: Pets", // for hospital/emergencies
     disclosureIds: ["work", "private"],
     message:
       "I have pets at home. Please help me find someone to look after them. My pets:",
@@ -425,6 +785,8 @@ export const TEMPLATE_CARDS: Card[] = [
     media: [],
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "formal",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -441,6 +803,8 @@ export const TEMPLATE_CARDS: Card[] = [
     media: [],
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "minimal",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -450,13 +814,15 @@ export const TEMPLATE_CARDS: Card[] = [
     category: "tasks",
     priority: 1,
     lang: "en",
-    title: "Help boarding.",
+    title: "Help boarding",
     disclosureIds: ["work", "private"],
     message: "I need to get on board. Please help.",
     list: [],
     media: [],
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "",
+    tone: "minimal",
     lastEditedAt: "2026-01-30",
     source: "template",
   },
@@ -477,6 +843,8 @@ export const TEMPLATE_CARDS: Card[] = [
     media: [],
     sharing: SharingPolicy.INHERIT,
     quickAccess: QuickAccessPolicy.ALLOWED,
+    intent: "empty",
+    tone: "neutral",
     lastEditedAt: "2026-01-30",
     source: "template",
   },

@@ -8,12 +8,15 @@ export type QuickAccessPolicyType =
 
 export type Category =
   | "capacity"
+  | "support"
   | "boundaries"
   | "low-conflict"
   | "tasks"
   | "medical"
   | "work"
   | "family";
+
+export type Tone = "neutral" | "formal" | "urgent" | "minimal" | "explanatory";
 
 export type Card = {
   id: string;
@@ -27,6 +30,8 @@ export type Card = {
   media?: any[];
   sharing: SharingPolicyType;
   quickAccess: QuickAccessPolicyType;
+  intent?: string;
+  tone?: Tone;
   lastEditedAt: string; // ISO date
   source: "template" | "user";
 };
