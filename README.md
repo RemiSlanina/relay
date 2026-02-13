@@ -21,6 +21,8 @@ pre-written, low-effort messages that reduce friction in real-world interactions
 
 ```
 
+DEPRECATED
+
 app/
   index.tsx
   _layout.tsx
@@ -105,33 +107,6 @@ usr:9f3a2c4e
 
 #### maybe later: (but not right now)
 
-I could add a src/ later, but don't need it. If I add backend.
-
-```
-src/                      # maybe, maybe not (currently not)
-  app/                    # expo router (or screens)
-    index.tsx
-    card.tsx              # display a card
-
-  components/
-    CardView.tsx
-
-  cards/                  # domain folder (important)
-    Card.ts               # model (was models/Card.ts)
-    Cards.constants.ts    # SharingPolicy, QuickAccessPolicy as const
-    cards.templates.ts    # shipped defaults
-    cards.store.ts        # state logic
-    CardsContext.tsx      # turn store into context (TODO)
-    cards.storage.ts      # persistence (later)
-
-  hooks/
-    useCards.ts           # optional thin wrapper
-
-  assets/
-  constants/              # TODO delete leftovers from cards.js and cards.ts
-
-```
-
 Where these things live (very explicit answer)
 
 - Shape → Card.ts
@@ -168,7 +143,23 @@ old but useful
 - Save
 - Persist locally
 
-2.  Persistence (AsyncStorage or similar)
+2.  Persistence
+    AsyncStorage or similar
+
+3.  Hide/Show Disclosure Toggle
+
+- Boolean state
+- Animated collapse later
+- Default visible or hidden depending on card type
+  It respects sensory context.
+
+4. implement something I've forgotten
+
+5. implement local persistence (cards.storage.ts)
+
+6. enhance create card features (tone, category selection, ...)
+7. edit functionality (create an edit screen)
+   8 improved ui: add more polished animations and transitions,
 
 ## Welcome to your Expo app 👋
 

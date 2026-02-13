@@ -1,23 +1,25 @@
+import { useAccessibility } from "@/domain/accessibility/AccessibilityContext";
 import { useCards } from "@/domain/cards/CardsContext";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import Animated, { FadeIn, FadeOut, BounceIn } from "react-native-reanimated";
-import { useAccessibility, useMotionSetting } from "@/domain/accessibility/AccessibilityContext";
+import Animated, { BounceIn, FadeIn, FadeOut } from "react-native-reanimated";
+
+// TODO: sort cards alphabetically (by title)
 
 export default function IndexScreen() {
   const router = useRouter();
   const { cards } = useCards();
   const { settings } = useAccessibility();
-  
+
   // Use motion setting from accessibility context
-  const shouldAnimate = settings.motion !== 'none';
-  
+  const shouldAnimate = settings.motion !== "none";
+
   // Animation configurations based on accessibility settings
   const customFadeIn = shouldAnimate ? FadeIn : undefined;
   const customBounceIn = shouldAnimate ? BounceIn : undefined;
   const customFadeOut = shouldAnimate ? FadeOut : undefined;
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -50,7 +52,7 @@ export default function IndexScreen() {
                 style={styles.cardItem}
               >
                 <Text style={styles.cardTitle}>{item.title}</Text>
-                {item.source === 'user' && (
+                {item.source === "user" && (
                   <View style={styles.userCardBadge}>
                     <Text style={styles.userCardBadgeText}>Custom</Text>
                   </View>
@@ -60,9 +62,12 @@ export default function IndexScreen() {
           )}
         />
       )}
-      
+
       {/* Add Card Button - Fixed at bottom right with animation */}
-      <Animated.View entering={customBounceIn} style={styles.addButtonContainer}>
+      <Animated.View
+        entering={customBounceIn}
+        style={styles.addButtonContainer}
+      >
         <Pressable
           style={styles.addButton}
           onPress={() => router.push("/cards/create")}
@@ -77,17 +82,17 @@ export default function IndexScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
+  container: {
+    flex: 1,
     padding: 16,
     position: "relative",
-    backgroundColor: "#f8f9fa"
+    backgroundColor: "#f8f9fa",
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#2c3e50"
+    color: "#2c3e50",
   },
   cardItem: {
     paddingVertical: 16,
@@ -101,7 +106,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
-    elevation: 1
+    elevation: 1,
   },
   header: {
     flexDirection: "row",
@@ -112,7 +117,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: "500",
-    color: "#2c3e50"
+    color: "#2c3e50",
   },
   settingsButton: {
     padding: 8,
@@ -127,30 +132,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
-    alignSelf: "flex-start"
+    alignSelf: "flex-start",
   },
   userCardBadgeText: {
     fontSize: 12,
     color: "#1976d2",
-    fontWeight: "600"
+    fontWeight: "600",
   },
   emptyState: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 40
+    padding: 40,
   },
   emptyStateText: {
     fontSize: 16,
     color: "#6c757d",
     textAlign: "center",
     marginTop: 16,
-    maxWidth: 250
+    maxWidth: 250,
   },
   addButtonContainer: {
     position: "absolute",
     right: 20,
-    bottom: 20
+    bottom: 20,
   },
   addButton: {
     width: 60,
@@ -163,8 +168,8 @@ const styles = StyleSheet.create({
     shadowColor: "#28a745",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
-    shadowRadius: 6
-  }
+    shadowRadius: 6,
+  },
 });
 
 // ScrollView: (don't forget IMPORT!)
