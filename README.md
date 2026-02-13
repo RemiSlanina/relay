@@ -140,25 +140,9 @@ Where these things live (very explicit answer)
 - User state → cards.store.ts
 - Persistence → cards.storage.ts (later)
 
-### older ideas:
+### older ideas/structure
 
 ```
-new
-src/
-  data/
-    cards.templates.ts      // DUMMY_CARDS live here
-  models/
-    Card.ts                 // type / interface
-  state/
-    cardsStore.ts           // app-level card state
-  storage/
-    cardsStorage.ts         // save/load from device
-  components/
-    CardView.tsx
-  screens/
-    index.tsx
-    card.tsx
-
 
 
 old but useful
@@ -172,6 +156,19 @@ old but useful
   App.tsx       # Entry point
 
 ```
+
+## next step: todo
+
+1. Custom Card Creation
+
+- “+ Add card” button
+- Title
+- Optional disclosure
+- Body text
+- Save
+- Persist locally
+
+2.  Persistence (AsyncStorage or similar)
 
 ## Welcome to your Expo app 👋
 
