@@ -11,6 +11,7 @@
 
 import { CardsProvider } from "@/domain/cards/CardsContext";
 import { DisclosureProvider } from "@/domain/disclosures/DisclosureContext";
+import { AccessibilityProvider } from "@/domain/accessibility/AccessibilityContext";
 import { Stack } from "expo-router";
 
 export default function RootLayout() {
@@ -18,7 +19,9 @@ export default function RootLayout() {
   return (
     <CardsProvider>
       <DisclosureProvider>
-        <Stack />
+        <AccessibilityProvider>
+          <Stack />
+        </AccessibilityProvider>
       </DisclosureProvider>
     </CardsProvider>
   );

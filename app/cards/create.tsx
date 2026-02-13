@@ -1,13 +1,14 @@
+import { useAccessibility } from "@/domain/accessibility/AccessibilityContext";
+import { Card } from "@/domain/cards/Card";
 import {
   QuickAccessPolicy,
   SharingPolicy,
 } from "@/domain/cards/Card.constants";
-import { Card } from "@/domain/cards/Card";
 import { useCards } from "@/domain/cards/CardsContext";
 import { useDisclosure } from "@/domain/disclosures/DisclosureContext";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { MaterialIcons } from "@expo/vector-icons";
 import {
   Modal,
   Pressable,
@@ -29,6 +30,10 @@ export default function CreateCardScreen() {
     string | null
   >(null);
   const [showDisclosureModal, setShowDisclosureModal] = useState(false);
+  const { settings } = useAccessibility();
+
+  // Use motion setting from accessibility context
+  const shouldAnimate = settings.motion !== "none";
 
   const handleSave = () => {
     if (!title.trim() || !message.trim()) {
@@ -78,6 +83,9 @@ export default function CreateCardScreen() {
             value={title}
             onChangeText={setTitle}
             placeholder="Card title"
+            accessibilityLabel="Card title"
+            accessibilityHint="Enter the title for your card"
+            importantForAccessibility="yes"
           />
         </View>
 
@@ -90,6 +98,9 @@ export default function CreateCardScreen() {
             placeholder="Card message"
             multiline
             numberOfLines={6}
+            accessibilityLabel="Card message"
+            accessibilityHint="Enter the main content for your card"
+            importantForAccessibility="yes"
           />
         </View>
 
@@ -98,9 +109,20 @@ export default function CreateCardScreen() {
           <Pressable
             style={styles.disclosureSelector}
             onPress={() => setShowDisclosureModal(true)}
+            accessibilityLabel={
+              getDisclosureText() || "Select disclosure, optional"
+            }
+            accessibilityHint="Choose a disclosure to add to your card"
+            accessibilityRole="button"
           >
-            <Text style={styles.disclosureText}>{getDisclosureText() || "Select disclosure (optional)"}</Text>
-            <MaterialIcons name={showDisclosureModal ? "arrow-drop-up" : "arrow-drop-down"} size={24} style={styles.disclosureChevron} />
+            <Text style={styles.disclosureText}>
+              {getDisclosureText() || "Select disclosure (optional)"}
+            </Text>
+            <MaterialIcons
+              name={showDisclosureModal ? "arrow-drop-up" : "arrow-drop-down"}
+              size={24}
+              style={styles.disclosureChevron}
+            />
           </Pressable>
         </View>
 
@@ -108,12 +130,18 @@ export default function CreateCardScreen() {
           <Pressable
             style={[styles.customButton, styles.cancelButton]}
             onPress={() => router.back()}
+            accessibilityLabel="Cancel"
+            accessibilityHint="Discard changes and return to cards list"
+            accessibilityRole="button"
           >
             <Text style={styles.cancelButtonText}>Cancel</Text>
           </Pressable>
           <Pressable
             style={[styles.customButton, styles.saveButton]}
             onPress={handleSave}
+            accessibilityLabel="Save card"
+            accessibilityHint="Save your new card"
+            accessibilityRole="button"
           >
             <Text style={styles.saveButtonText}>Save Card</Text>
           </Pressable>
@@ -149,6 +177,9 @@ export default function CreateCardScreen() {
                   setSelectedDisclosureId(disclosure.id);
                   setShowDisclosureModal(false);
                 }}
+                accessibilityLabel={`Select disclosure: ${disclosure.text}`}
+                accessibilityHint="Add this disclosure to your card"
+                accessibilityRole="button"
               >
                 <Text style={styles.disclosureOptionText}>
                   {disclosure.text}
@@ -159,6 +190,9 @@ export default function CreateCardScreen() {
             <Pressable
               style={[styles.customButton, styles.modalCancelButton]}
               onPress={() => setShowDisclosureModal(false)}
+              accessibilityLabel="Cancel disclosure selection"
+              accessibilityHint="Close disclosure selection without changes"
+              accessibilityRole="button"
             >
               <Text style={styles.modalCancelButtonText}>Cancel</Text>
             </Pressable>

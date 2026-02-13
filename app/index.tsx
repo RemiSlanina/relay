@@ -3,17 +3,37 @@ import { useRouter } from "expo-router";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Animated, { FadeIn, FadeOut, BounceIn } from "react-native-reanimated";
+import { useAccessibility, useMotionSetting } from "@/domain/accessibility/AccessibilityContext";
 
 export default function IndexScreen() {
   const router = useRouter();
   const { cards } = useCards();
+  const { settings } = useAccessibility();
+  
+  // Use motion setting from accessibility context
+  const shouldAnimate = settings.motion !== 'none';
+  
+  // Animation configurations based on accessibility settings
+  const customFadeIn = shouldAnimate ? FadeIn : undefined;
+  const customBounceIn = shouldAnimate ? BounceIn : undefined;
+  const customFadeOut = shouldAnimate ? FadeOut : undefined;
   
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Your Cards</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>Your Cards</Text>
+        <Pressable
+          style={styles.settingsButton}
+          onPress={() => router.push("/settings")}
+          accessibilityLabel="Settings"
+          accessibilityHint="Open accessibility and app settings"
+        >
+          <MaterialIcons name="settings" size={24} color="#495057" />
+        </Pressable>
+      </View>
 
       {cards.length === 0 ? (
-        <Animated.View entering={FadeIn} style={styles.emptyState}>
+        <Animated.View entering={customFadeIn} style={styles.emptyState}>
           <MaterialIcons name="note-add" size={48} color="#adb5bd" />
           <Text style={styles.emptyStateText}>
             No cards yet. Tap the + button to create your first card!
@@ -24,7 +44,7 @@ export default function IndexScreen() {
           data={cards ?? []}
           keyExtractor={(item) => String(item.id)} // it's a string, but to be safe
           renderItem={({ item }) => (
-            <Animated.View entering={FadeIn} exiting={FadeOut}>
+            <Animated.View entering={customFadeIn} exiting={customFadeOut}>
               <Pressable
                 onPress={() => router.push(`/cards/${item.id}`)}
                 style={styles.cardItem}
@@ -42,10 +62,12 @@ export default function IndexScreen() {
       )}
       
       {/* Add Card Button - Fixed at bottom right with animation */}
-      <Animated.View entering={BounceIn} style={styles.addButtonContainer}>
+      <Animated.View entering={customBounceIn} style={styles.addButtonContainer}>
         <Pressable
           style={styles.addButton}
           onPress={() => router.push("/cards/create")}
+          accessibilityLabel="Create new card"
+          accessibilityHint="Opens the card creation form"
         >
           <MaterialIcons name="add" size={28} color="white" />
         </Pressable>
@@ -81,10 +103,21 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 1
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+  },
   cardTitle: {
     fontSize: 18,
     fontWeight: "500",
     color: "#2c3e50"
+  },
+  settingsButton: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: "#f1f3f5",
   },
   userCardBadge: {
     position: "absolute",
