@@ -7,8 +7,8 @@ import { useCards } from "@/domain/cards/CardsContext";
 import { useDisclosure } from "@/domain/disclosures/DisclosureContext";
 import { useRouter } from "expo-router";
 import { useState } from "react";
+import { MaterialIcons } from "@expo/vector-icons";
 import {
-  Button,
   Modal,
   Pressable,
   ScrollView,
@@ -99,13 +99,24 @@ export default function CreateCardScreen() {
             style={styles.disclosureSelector}
             onPress={() => setShowDisclosureModal(true)}
           >
-            <Text style={styles.disclosureText}>{getDisclosureText()}</Text>
+            <Text style={styles.disclosureText}>{getDisclosureText() || "Select disclosure (optional)"}</Text>
+            <MaterialIcons name={showDisclosureModal ? "arrow-drop-up" : "arrow-drop-down"} size={24} style={styles.disclosureChevron} />
           </Pressable>
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button title="Cancel" onPress={() => router.back()} color="#666" />
-          <Button title="Save" onPress={handleSave} color="#4CAF50" />
+          <Pressable
+            style={[styles.customButton, styles.cancelButton]}
+            onPress={() => router.back()}
+          >
+            <Text style={styles.cancelButtonText}>Cancel</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.customButton, styles.saveButton]}
+            onPress={handleSave}
+          >
+            <Text style={styles.saveButtonText}>Save Card</Text>
+          </Pressable>
         </View>
       </View>
 
@@ -145,11 +156,12 @@ export default function CreateCardScreen() {
               </Pressable>
             ))}
 
-            <Button
-              title="Cancel"
+            <Pressable
+              style={[styles.customButton, styles.modalCancelButton]}
               onPress={() => setShowDisclosureModal(false)}
-              color="#666"
-            />
+            >
+              <Text style={styles.modalCancelButtonText}>Cancel</Text>
+            </Pressable>
           </View>
         </View>
       </Modal>
@@ -160,80 +172,127 @@ export default function CreateCardScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#f8f9fa",
   },
   content: {
-    padding: 20,
+    padding: 24,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 24,
+    marginBottom: 28,
     textAlign: "center",
+    color: "#2c3e50",
   },
   formGroup: {
-    marginBottom: 20,
+    marginBottom: 24,
   },
   label: {
     fontSize: 16,
-    fontWeight: "500",
-    marginBottom: 8,
+    fontWeight: "600",
+    marginBottom: 10,
+    color: "#495057",
   },
   input: {
     backgroundColor: "white",
     borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    padding: 12,
+    borderColor: "#dee2e6",
+    borderRadius: 12,
+    padding: 16,
     fontSize: 16,
+    color: "#212529",
   },
   textArea: {
-    height: 120,
+    height: 150,
     textAlignVertical: "top",
+    paddingTop: 16,
   },
   disclosureSelector: {
     backgroundColor: "white",
     borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    padding: 12,
-    minHeight: 50,
-    justifyContent: "center",
+    borderColor: "#dee2e6",
+    borderRadius: 12,
+    padding: 16,
+    minHeight: 56,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   disclosureText: {
     fontSize: 16,
-    color: "#333",
+    color: "#495057",
+    flex: 1,
+  },
+  disclosureChevron: {
+    color: "#6c757d",
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 30,
+    justifyContent: "space-between",
+    marginTop: 32,
+    gap: 16,
+  },
+  customButton: {
+    flex: 1,
+    padding: 16,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cancelButton: {
+    backgroundColor: "#e9ecef",
+  },
+  cancelButtonText: {
+    color: "#495057",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  saveButton: {
+    backgroundColor: "#28a745",
+  },
+  saveButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "600",
   },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   modalContent: {
     backgroundColor: "white",
-    borderRadius: 12,
-    padding: 20,
-    width: "80%",
-    maxHeight: "60%",
+    borderRadius: 16,
+    padding: 24,
+    width: "85%",
+    maxHeight: "70%",
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginBottom: 20,
     textAlign: "center",
+    color: "#2c3e50",
   },
   disclosureOption: {
-    padding: 12,
+    padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+    borderBottomColor: "#e9ecef",
   },
   disclosureOptionText: {
     fontSize: 16,
+    color: "#212529",
+  },
+  modalCancelButton: {
+    marginTop: 20,
+    padding: 12,
+    borderRadius: 8,
+    backgroundColor: "#f1f3f5",
+  },
+  modalCancelButtonText: {
+    color: "#6c757d",
+    fontSize: 16,
+    fontWeight: "500",
   },
 });
