@@ -22,6 +22,7 @@ import Animated, { BounceIn, FadeIn, FadeOut } from "react-native-reanimated";
 // window.CardStorage = CardStorage;
 
 // TODO: sort cards alphabetically (by title)
+// TODO: delete and edit function
 
 export default function IndexScreen() {
   const router = useRouter();
