@@ -2,14 +2,30 @@ import { useAccessibility } from "@/domain/accessibility/AccessibilityContext";
 import { useCards } from "@/domain/cards/CardsContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Animated, { BounceIn, FadeIn, FadeOut } from "react-native-reanimated";
+
+// // @ts-ignore
+// window.AsyncStorage = AsyncStorage;
+// // @ts-ignore
+// window.CardStorage = CardStorage;
+
+// window.AsyncStorage = AsyncStorage;
+// // @ts-ignore
+// window.CardStorage = CardStorage;
 
 // TODO: sort cards alphabetically (by title)
 
 export default function IndexScreen() {
   const router = useRouter();
-  const { cards } = useCards();
+  const { cards, loaded } = useCards();
   const { settings } = useAccessibility();
 
   // Use motion setting from accessibility context
@@ -34,7 +50,12 @@ export default function IndexScreen() {
         </Pressable>
       </View>
 
-      {cards.length === 0 ? (
+      {!loaded ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#28a745" />
+          <Text style={styles.loadingText}>Loading your cards...</Text>
+        </View>
+      ) : cards.length === 0 ? (
         <Animated.View entering={customFadeIn} style={styles.emptyState}>
           <MaterialIcons name="note-add" size={48} color="#adb5bd" />
           <Text style={styles.emptyStateText}>
@@ -138,6 +159,17 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#1976d2",
     fontWeight: "600",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 40,
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: "#6c757d",
   },
   emptyState: {
     flex: 1,

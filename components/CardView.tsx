@@ -2,13 +2,6 @@ import { Card } from "@/domain/cards/Card";
 import { useDisclosure } from "@/domain/disclosures/DisclosureContext";
 import { StyleSheet, Text, View } from "react-native";
 
-// type Card = {
-//   title: string;
-//   disclosureIds?: string;
-//   message: string;
-//   list?: string[];
-// };
-
 export default function CardView({ card }: { card: Card }) {
   const { getDisclosureById } = useDisclosure();
 
@@ -39,15 +32,6 @@ export default function CardView({ card }: { card: Card }) {
         </View>
       ) : null}
     </View>
-
-    //   <Text key={card.id} style={styles.heading}>
-    //     {card.title}
-    //     {card.disclosureIds}
-    //     {card.message}
-    //    {card.list}
-    //   </Text>
-    //   ))}
-    // </View>
   );
 }
 

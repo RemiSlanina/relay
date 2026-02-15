@@ -4,12 +4,10 @@
     "slug": "Relay",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/relay-icon.svg",
+    "icon": "./assets/images/icon.png",
     "scheme": "relay",
     "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": [
-      "assets/fonts/*"
-    ],
+    "assetBundlePatterns": ["assets/fonts/*"],
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
