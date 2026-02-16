@@ -1,7 +1,8 @@
 import { useAccessibility } from "@/domain/accessibility/AccessibilityContext";
 import { useCards } from "@/domain/cards/CardsContext";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
+import { useEffect } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -12,19 +13,16 @@ import {
 } from "react-native";
 import Animated, { BounceIn, FadeIn, FadeOut } from "react-native-reanimated";
 
-// // @ts-ignore
-// window.AsyncStorage = AsyncStorage;
-// // @ts-ignore
-// window.CardStorage = CardStorage;
-
-// window.AsyncStorage = AsyncStorage;
-// // @ts-ignore
-// window.CardStorage = CardStorage;
-
 // TODO: sort cards alphabetically (by title)
 // TODO: delete and edit function
 
 export default function IndexScreen() {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({ title: "Relay :: Communication shortcuts" });
+  }, [navigation]);
+
   const router = useRouter();
   const { cards, loaded } = useCards();
   const { settings } = useAccessibility();
@@ -40,7 +38,7 @@ export default function IndexScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Your Cards</Text>
+        <Text style={styles.title}>Your saved Cards</Text>
         <Pressable
           style={styles.settingsButton}
           onPress={() => router.push("/settings")}
