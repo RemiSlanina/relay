@@ -1,3 +1,10 @@
+import {
+  BorderRadius,
+  Colors,
+  Spacing,
+  Typography,
+  palette,
+} from "@/constants/theme";
 import { useAccessibility } from "@/domain/accessibility/AccessibilityContext";
 import { Card } from "@/domain/cards/Card";
 import {
@@ -17,12 +24,15 @@ import {
   Text,
   TextInput,
   View,
+  useColorScheme,
 } from "react-native";
 
 export default function CreateCardScreen() {
   const router = useRouter();
   const { addCard } = useCards();
   const { disclosures } = useDisclosure();
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme === "dark" ? "dark" : "light"];
 
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
@@ -72,17 +82,26 @@ export default function CreateCardScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Create New Card</Text>
+    <ScrollView
+      style={[styles.container, { backgroundColor: theme.background }]}
+      contentContainerStyle={styles.content}
+    >
+      <View style={styles.innerContent}>
+        <Text style={[styles.title, { color: theme.text }]}>
+          Create New Card
+        </Text>
 
         <View style={styles.formGroup}>
-          <Text style={styles.label}>Title</Text>
+          <Text style={[styles.label, { color: theme.text }]}>Title</Text>
           <TextInput
-            style={styles.input}
+            style={[
+              styles.input,
+              { borderColor: theme.border, color: theme.text },
+            ]}
             value={title}
             onChangeText={setTitle}
             placeholder="Card title"
+            placeholderTextColor={theme.textSecondary}
             accessibilityLabel="Card title"
             accessibilityHint="Enter the title for your card"
             importantForAccessibility="yes"
@@ -90,12 +109,17 @@ export default function CreateCardScreen() {
         </View>
 
         <View style={styles.formGroup}>
-          <Text style={styles.label}>Message</Text>
+          <Text style={[styles.label, { color: theme.text }]}>Message</Text>
           <TextInput
-            style={[styles.input, styles.textArea]}
+            style={[
+              styles.input,
+              styles.textArea,
+              { borderColor: theme.border, color: theme.text },
+            ]}
             value={message}
             onChangeText={setMessage}
             placeholder="Card message"
+            placeholderTextColor={theme.textSecondary}
             multiline
             numberOfLines={6}
             accessibilityLabel="Card message"
@@ -105,9 +129,11 @@ export default function CreateCardScreen() {
         </View>
 
         <View style={styles.formGroup}>
-          <Text style={styles.label}>Disclosure (Optional)</Text>
+          <Text style={[styles.label, { color: theme.text }]}>
+            Disclosure (Optional)
+          </Text>
           <Pressable
-            style={styles.disclosureSelector}
+            style={[styles.disclosureSelector, { borderColor: theme.border }]}
             onPress={() => setShowDisclosureModal(true)}
             accessibilityLabel={
               getDisclosureText() || "Select disclosure, optional"
@@ -115,35 +141,52 @@ export default function CreateCardScreen() {
             accessibilityHint="Choose a disclosure to add to your card"
             accessibilityRole="button"
           >
-            <Text style={styles.disclosureText}>
+            <Text
+              style={[styles.disclosureText, { color: theme.text }]}
+              accessible={true}
+            >
               {getDisclosureText() || "Select disclosure (optional)"}
             </Text>
             <MaterialIcons
               name={showDisclosureModal ? "arrow-drop-up" : "arrow-drop-down"}
               size={24}
-              style={styles.disclosureChevron}
+              style={[styles.disclosureChevron, { color: theme.textSecondary }]}
             />
           </Pressable>
         </View>
 
         <View style={styles.buttonContainer}>
           <Pressable
-            style={[styles.customButton, styles.cancelButton]}
+            style={[
+              styles.customButton,
+              styles.cancelButton,
+              { backgroundColor: theme.surface },
+            ]}
             onPress={() => router.back()}
             accessibilityLabel="Cancel"
             accessibilityHint="Discard changes and return to cards list"
             accessibilityRole="button"
           >
-            <Text style={styles.cancelButtonText}>Cancel</Text>
+            <Text
+              style={[styles.cancelButtonText, { color: theme.textSecondary }]}
+            >
+              Cancel
+            </Text>
           </Pressable>
           <Pressable
-            style={[styles.customButton, styles.saveButton]}
+            style={[
+              styles.customButton,
+              styles.saveButton,
+              { backgroundColor: theme.success },
+            ]}
             onPress={handleSave}
             accessibilityLabel="Save card"
             accessibilityHint="Save your new card"
             accessibilityRole="button"
           >
-            <Text style={styles.saveButtonText}>Save Card</Text>
+            <Text style={[styles.saveButtonText, { color: theme.surface }]}>
+              Save Card
+            </Text>
           </Pressable>
         </View>
       </View>
@@ -155,24 +198,49 @@ export default function CreateCardScreen() {
         transparent={true}
         onRequestClose={() => setShowDisclosureModal(false)}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Select Disclosure</Text>
+        <View
+          style={[
+            styles.modalContainer,
+            { backgroundColor: "rgba(0, 0, 0, 0.6)" },
+          ]}
+          accessible={true}
+        >
+          <View
+            style={[styles.modalContent, { backgroundColor: theme.surface }]}
+            accessible={true}
+          >
+            <Text style={[styles.modalTitle, { color: theme.text }]}>
+              Select Disclosure
+            </Text>
 
             <Pressable
-              style={styles.disclosureOption}
+              style={[
+                styles.disclosureOption,
+                { borderBottomColor: theme.border },
+              ]}
               onPress={() => {
                 setSelectedDisclosureId(null);
                 setShowDisclosureModal(false);
               }}
+              accessible={true}
+              accessibilityLabel="Select no disclosure"
+              accessibilityRole="button"
             >
-              <Text style={styles.disclosureOptionText}>None</Text>
+              <Text
+                style={[styles.disclosureOptionText, { color: theme.text }]}
+                accessible={true}
+              >
+                None
+              </Text>
             </Pressable>
 
             {disclosures.map((disclosure) => (
               <Pressable
                 key={disclosure.id}
-                style={styles.disclosureOption}
+                style={[
+                  styles.disclosureOption,
+                  { borderBottomColor: theme.border },
+                ]}
                 onPress={() => {
                   setSelectedDisclosureId(disclosure.id);
                   setShowDisclosureModal(false);
@@ -181,20 +249,35 @@ export default function CreateCardScreen() {
                 accessibilityHint="Add this disclosure to your card"
                 accessibilityRole="button"
               >
-                <Text style={styles.disclosureOptionText}>
+                <Text
+                  style={[styles.disclosureOptionText, { color: theme.text }]}
+                  accessible={true}
+                >
                   {disclosure.text}
                 </Text>
               </Pressable>
             ))}
 
             <Pressable
-              style={[styles.customButton, styles.modalCancelButton]}
+              style={[
+                styles.customButton,
+                styles.modalCancelButton,
+                { backgroundColor: theme.surface },
+              ]}
               onPress={() => setShowDisclosureModal(false)}
               accessibilityLabel="Cancel disclosure selection"
               accessibilityHint="Close disclosure selection without changes"
               accessibilityRole="button"
             >
-              <Text style={styles.modalCancelButtonText}>Cancel</Text>
+              <Text
+                style={[
+                  styles.modalCancelButtonText,
+                  { color: theme.textSecondary },
+                ]}
+                accessible={true}
+              >
+                Cancel
+              </Text>
             </Pressable>
           </View>
         </View>
@@ -206,127 +289,108 @@ export default function CreateCardScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8f9fa",
   },
   content: {
-    padding: 24,
+    flexGrow: 1,
+  },
+  innerContent: {
+    padding: Spacing.xl,
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 28,
+    fontSize: Typography.xxl,
+    fontWeight: Typography.bold,
+    marginBottom: Spacing.xxl,
     textAlign: "center",
-    color: "#2c3e50",
   },
   formGroup: {
-    marginBottom: 24,
+    marginBottom: Spacing.xl,
   },
   label: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 10,
-    color: "#495057",
+    fontSize: Typography.md,
+    fontWeight: Typography.semiBold,
+    marginBottom: Spacing.sm,
   },
   input: {
-    backgroundColor: "white",
+    backgroundColor: palette.surface,
     borderWidth: 1,
-    borderColor: "#dee2e6",
-    borderRadius: 12,
-    padding: 16,
-    fontSize: 16,
-    color: "#212529",
+    borderRadius: BorderRadius.md,
+    padding: Spacing.md,
+    fontSize: Typography.md,
   },
   textArea: {
     height: 150,
     textAlignVertical: "top",
-    paddingTop: 16,
+    paddingTop: Spacing.md,
   },
   disclosureSelector: {
-    backgroundColor: "white",
+    backgroundColor: palette.surface,
     borderWidth: 1,
-    borderColor: "#dee2e6",
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: BorderRadius.md,
+    padding: Spacing.md,
     minHeight: 56,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   disclosureText: {
-    fontSize: 16,
-    color: "#495057",
+    fontSize: Typography.md,
     flex: 1,
   },
-  disclosureChevron: {
-    color: "#6c757d",
-  },
+  disclosureChevron: {},
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 32,
-    gap: 16,
+    marginTop: Spacing.xxl,
+    gap: Spacing.md,
   },
   customButton: {
     flex: 1,
-    padding: 16,
-    borderRadius: 12,
+    padding: Spacing.md,
+    borderRadius: BorderRadius.md,
     alignItems: "center",
     justifyContent: "center",
   },
-  cancelButton: {
-    backgroundColor: "#e9ecef",
-  },
+  cancelButton: {},
   cancelButtonText: {
-    color: "#495057",
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: Typography.md,
+    fontWeight: Typography.semiBold,
   },
-  saveButton: {
-    backgroundColor: "#28a745",
-  },
+  saveButton: {},
   saveButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: Typography.md,
+    fontWeight: Typography.semiBold,
   },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   modalContent: {
-    backgroundColor: "white",
-    borderRadius: 16,
-    padding: 24,
+    borderRadius: BorderRadius.xl,
+    padding: Spacing.xl,
     width: "85%",
     maxHeight: "70%",
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
+    fontSize: Typography.xl,
+    fontWeight: Typography.bold,
+    marginBottom: Spacing.xl,
     textAlign: "center",
-    color: "#2c3e50",
   },
   disclosureOption: {
-    padding: 16,
+    padding: Spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: "#e9ecef",
   },
   disclosureOptionText: {
-    fontSize: 16,
-    color: "#212529",
+    fontSize: Typography.md,
   },
   modalCancelButton: {
-    marginTop: 20,
-    padding: 12,
-    borderRadius: 8,
-    backgroundColor: "#f1f3f5",
+    marginTop: Spacing.lg,
+    padding: Spacing.sm,
+    borderRadius: BorderRadius.sm,
   },
   modalCancelButtonText: {
-    color: "#6c757d",
-    fontSize: 16,
-    fontWeight: "500",
+    fontSize: Typography.md,
+    fontWeight: Typography.medium,
   },
 });

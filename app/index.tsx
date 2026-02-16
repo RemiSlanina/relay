@@ -10,7 +10,9 @@ import {
   StyleSheet,
   Text,
   View,
+  useColorScheme,
 } from "react-native";
+import { Colors, Spacing, Typography, BorderRadius } from "@/constants/theme";
 import Animated, { BounceIn, FadeIn, FadeOut } from "react-native-reanimated";
 
 // TODO: sort cards alphabetically (by title)
@@ -18,6 +20,8 @@ import Animated, { BounceIn, FadeIn, FadeOut } from "react-native-reanimated";
 
 export default function IndexScreen() {
   const navigation = useNavigation();
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme === 'dark' ? 'dark' : 'light'];
 
   useEffect(() => {
     navigation.setOptions({ title: "Relay :: Communication shortcuts" });
@@ -36,28 +40,29 @@ export default function IndexScreen() {
   const customFadeOut = shouldAnimate ? FadeOut : undefined;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>Your saved Cards</Text>
+        <Text style={[styles.title, { color: theme.text }]}>Your saved Cards</Text>
         <Pressable
-          style={styles.settingsButton}
+          style={[styles.settingsButton, { backgroundColor: theme.surface }]}
           onPress={() => router.push("/settings")}
           accessibilityLabel="Settings"
           accessibilityHint="Open accessibility and app settings"
         >
-          <MaterialIcons name="settings" size={24} color="#495057" />
+          <MaterialIcons name="settings" size={24} color={theme.text} />
         </Pressable>
       </View>
 
       {!loaded ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#28a745" />
-          <Text style={styles.loadingText}>Loading your cards...</Text>
+          <ActivityIndicator size="large" color={theme.success} />
+          <Text style={[styles.loadingText, { color: theme.textSecondary }]}>Loading your cards...</Text>
         </View>
       ) : cards.length === 0 ? (
         <Animated.View entering={customFadeIn} style={styles.emptyState}>
-          <MaterialIcons name="note-add" size={48} color="#adb5bd" />
-          <Text style={styles.emptyStateText}>
+          <MaterialIcons name="note-add" size={48} color={theme.textSecondary} />
+          <Text style={[styles.emptyStateText, { color: theme.textSecondary }]}
+                accessible={true}>
             No cards yet. Tap the + button to create your first card!
           </Text>
         </Animated.View>
@@ -69,12 +74,28 @@ export default function IndexScreen() {
             <Animated.View entering={customFadeIn} exiting={customFadeOut}>
               <Pressable
                 onPress={() => router.push(`/cards/${item.id}`)}
-                style={styles.cardItem}
+                style={[styles.cardItem, { 
+                  backgroundColor: theme.surface, 
+                  borderBottomColor: theme.border 
+                }]}
+                accessible={true}
+                accessibilityLabel={`Card: ${item.title}`}
+                accessibilityRole="button"
               >
-                <Text style={styles.cardTitle}>{item.title}</Text>
+                <Text style={[styles.cardTitle, { color: theme.text }]}
+                      accessible={true}>
+                  {item.title}
+                </Text>
                 {item.source === "user" && (
-                  <View style={styles.userCardBadge}>
-                    <Text style={styles.userCardBadgeText}>Custom</Text>
+                  <View style={[styles.userCardBadge, { 
+                    backgroundColor: theme.primary + '20' 
+                  }]}
+                        accessible={true}
+                        accessibilityLabel="Custom card">
+                    <Text style={[styles.userCardBadgeText, { color: theme.primary }]}
+                          accessible={true}>
+                      Custom
+                    </Text>
                   </View>
                 )}
               </Pressable>
@@ -89,12 +110,12 @@ export default function IndexScreen() {
         style={styles.addButtonContainer}
       >
         <Pressable
-          style={styles.addButton}
+          style={[styles.addButton, { backgroundColor: theme.success }]}
           onPress={() => router.push("/cards/create")}
           accessibilityLabel="Create new card"
           accessibilityHint="Opens the card creation form"
         >
-          <MaterialIcons name="add" size={28} color="white" />
+          <MaterialIcons name="add" size={28} color={theme.surface} />
         </Pressable>
       </Animated.View>
     </View>
@@ -104,24 +125,20 @@ export default function IndexScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: Spacing.md,
     position: "relative",
-    backgroundColor: "#f8f9fa",
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: "#2c3e50",
+    fontSize: Typography.xxl,
+    fontWeight: Typography.bold,
+    marginBottom: Spacing.xl,
   },
   cardItem: {
-    paddingVertical: 16,
-    paddingHorizontal: 12,
+    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.sm,
     borderBottomWidth: 1,
-    borderBottomColor: "#e9ecef",
-    backgroundColor: "white",
-    borderRadius: 8,
-    marginBottom: 8,
+    borderRadius: BorderRadius.sm,
+    marginBottom: Spacing.sm,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
@@ -132,55 +149,49 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: Spacing.xl,
   },
   cardTitle: {
-    fontSize: 18,
-    fontWeight: "500",
-    color: "#2c3e50",
+    fontSize: Typography.md,
+    fontWeight: Typography.medium,
   },
   settingsButton: {
-    padding: 8,
-    borderRadius: 20,
-    backgroundColor: "#f1f3f5",
+    padding: Spacing.xs,
+    borderRadius: BorderRadius.full,
   },
   userCardBadge: {
     position: "absolute",
     right: 12,
     top: 12,
-    backgroundColor: "#e3f2fd",
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
+    paddingHorizontal: Spacing.xs,
+    paddingVertical: Spacing.xxs,
+    borderRadius: BorderRadius.sm,
     alignSelf: "flex-start",
   },
   userCardBadgeText: {
-    fontSize: 12,
-    color: "#1976d2",
-    fontWeight: "600",
+    fontSize: Typography.xxs,
+    fontWeight: Typography.semiBold,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 40,
+    padding: Spacing.xxl,
   },
   loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: "#6c757d",
+    marginTop: Spacing.md,
+    fontSize: Typography.md,
   },
   emptyState: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 40,
+    padding: Spacing.xxl,
   },
   emptyStateText: {
-    fontSize: 16,
-    color: "#6c757d",
+    fontSize: Typography.md,
     textAlign: "center",
-    marginTop: 16,
+    marginTop: Spacing.md,
     maxWidth: 250,
   },
   addButtonContainer: {
@@ -192,11 +203,10 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: "#28a745",
     justifyContent: "center",
     alignItems: "center",
     elevation: 6,
-    shadowColor: "#28a745",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,

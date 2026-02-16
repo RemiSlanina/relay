@@ -68,6 +68,7 @@ domain/
   disclosures/     # Disclosure models and storage
   sets/            # Set models and storage
 hooks/
+constants/         # themes
 assets/
 ```
 
