@@ -20,8 +20,8 @@ export const palette = {
   textDark: "#E8F0F5", // Light text for dark mode
   textSecondary: "#5d6768", // Secondary text
   textSecondaryDark: "#B8C5D1", // Secondary text dark mode
-  border: "#E0E0E0", // Subtle borders
-  borderDark: "#3A4A5C", // Dark mode borders
+  border: "hsla(0, 0%, 88%, 0.2)", // Subtle borders
+  borderDark: "hsla(212, 23%, 29%, 0.2)", // Dark mode borders
   error: "#E74C3C", // Error states
   success: "#2ECC71", // Success states
   warning: "#F39C12", // Warning states
@@ -91,6 +91,12 @@ export const BorderRadius = {
   lg: 16,
   xl: 20,
   full: 9999,
+};
+
+export const BorderDesign = {
+  light: 1,
+  medium: 3,
+  bold: 5,
 };
 
 // Get current color scheme

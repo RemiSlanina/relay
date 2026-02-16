@@ -72,6 +72,70 @@ import { QuickAccessPolicy, SharingPolicy } from "./Card.constants";
 
 export const TEMPLATE_CARDS: Card[] = [
   // ─────────────────────────────
+  // Test Cases / Layout
+  // ─────────────────────────────
+
+  {
+    id: "tpl:test-1-en-minimal",
+    category: "tasks",
+    priority: 0,
+    disclosureIds: ["nonverbal"],
+    lang: "en",
+    title: "Layout Test 1 short",
+    message: "lorem ipsum",
+    sharing: SharingPolicy.PRIVATE,
+    quickAccess: QuickAccessPolicy.BLOCKED,
+    intent: "test",
+    tone: "minimal",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  {
+    id: "tpl:test-2-en-minimal",
+    category: "tasks",
+    priority: 0,
+    disclosureIds: ["nonverbal"],
+    lang: "en",
+    title: "Layout Test 2 long",
+    message:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    sharing: SharingPolicy.PRIVATE,
+    quickAccess: QuickAccessPolicy.BLOCKED,
+    intent: "test",
+    tone: "minimal",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  {
+    id: "tpl:test-3-en-minimal",
+    category: "tasks",
+    priority: 0,
+    disclosureIds: ["nonverbal"],
+    lang: "en",
+    title: "Layout Test 3 list",
+    message:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+    sharing: SharingPolicy.PRIVATE,
+    quickAccess: QuickAccessPolicy.BLOCKED,
+    list: [
+      "𖥔 Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "𖥔 Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "𖥔 Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      "𖥔 Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      "𖥔 Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      "𖥔 Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      "𖥔 Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      "𖥔 Lorem ipsum dolor sit amet",
+    ],
+    intent: "test",
+    tone: "minimal",
+    lastEditedAt: "2026-02-12",
+    source: "template",
+  },
+
+  // ─────────────────────────────
   // Explanations / Apology
   // ─────────────────────────────
 
