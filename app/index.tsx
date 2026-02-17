@@ -1,3 +1,4 @@
+import { BorderRadius, Colors, Spacing, Typography } from "@/constants/theme";
 import { useAccessibility } from "@/domain/accessibility/AccessibilityContext";
 import { useCards } from "@/domain/cards/CardsContext";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -12,7 +13,6 @@ import {
   View,
   useColorScheme,
 } from "react-native";
-import { Colors, Spacing, Typography, BorderRadius } from "@/constants/theme";
 import Animated, { BounceIn, FadeIn, FadeOut } from "react-native-reanimated";
 
 // TODO: sort cards alphabetically (by title)
@@ -21,7 +21,7 @@ import Animated, { BounceIn, FadeIn, FadeOut } from "react-native-reanimated";
 export default function IndexScreen() {
   const navigation = useNavigation();
   const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme === 'dark' ? 'dark' : 'light'];
+  const theme = Colors[colorScheme === "dark" ? "dark" : "light"];
 
   useEffect(() => {
     navigation.setOptions({ title: "Relay :: Communication shortcuts" });
@@ -42,7 +42,9 @@ export default function IndexScreen() {
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: theme.text }]}>Your saved Cards</Text>
+        <Text style={[styles.title, { color: theme.text }]}>
+          Your saved Cards
+        </Text>
         <Pressable
           style={[styles.settingsButton, { backgroundColor: theme.surface }]}
           onPress={() => router.push("/settings")}
@@ -56,13 +58,21 @@ export default function IndexScreen() {
       {!loaded ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={theme.success} />
-          <Text style={[styles.loadingText, { color: theme.textSecondary }]}>Loading your cards...</Text>
+          <Text style={[styles.loadingText, { color: theme.textSecondary }]}>
+            Loading your cards...
+          </Text>
         </View>
       ) : cards.length === 0 ? (
         <Animated.View entering={customFadeIn} style={styles.emptyState}>
-          <MaterialIcons name="note-add" size={48} color={theme.textSecondary} />
-          <Text style={[styles.emptyStateText, { color: theme.textSecondary }]}
-                accessible={true}>
+          <MaterialIcons
+            name="note-add"
+            size={48}
+            color={theme.textSecondary}
+          />
+          <Text
+            style={[styles.emptyStateText, { color: theme.textSecondary }]}
+            accessible={true}
+          >
             No cards yet. Tap the + button to create your first card!
           </Text>
         </Animated.View>
@@ -74,26 +84,41 @@ export default function IndexScreen() {
             <Animated.View entering={customFadeIn} exiting={customFadeOut}>
               <Pressable
                 onPress={() => router.push(`/cards/${item.id}`)}
-                style={[styles.cardItem, { 
-                  backgroundColor: theme.surface, 
-                  borderBottomColor: theme.border 
-                }]}
+                style={[
+                  styles.cardItem,
+                  {
+                    backgroundColor: theme.surface,
+                    borderBottomColor: theme.border,
+                  },
+                ]}
                 accessible={true}
                 accessibilityLabel={`Card: ${item.title}`}
                 accessibilityRole="button"
               >
-                <Text style={[styles.cardTitle, { color: theme.text }]}
-                      accessible={true}>
+                <Text
+                  style={[styles.cardTitle, { color: theme.text }]}
+                  accessible={true}
+                >
                   {item.title}
                 </Text>
                 {item.source === "user" && (
-                  <View style={[styles.userCardBadge, { 
-                    backgroundColor: theme.primary + '20' 
-                  }]}
-                        accessible={true}
-                        accessibilityLabel="Custom card">
-                    <Text style={[styles.userCardBadgeText, { color: theme.primary }]}
-                          accessible={true}>
+                  <View
+                    style={[
+                      styles.userCardBadge,
+                      {
+                        backgroundColor: theme.primary + "20",
+                      },
+                    ]}
+                    accessible={true}
+                    accessibilityLabel="Custom card"
+                  >
+                    <Text
+                      style={[
+                        styles.userCardBadgeText,
+                        { color: theme.primary },
+                      ]}
+                      accessible={true}
+                    >
                       Custom
                     </Text>
                   </View>

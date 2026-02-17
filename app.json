@@ -2,7 +2,7 @@
   "expo": {
     "name": "Relay",
     "slug": "Relay",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "relay",
@@ -49,3 +49,26 @@
     }
   }
 }
+
+// {
+//   "expo": {
+//     "name": "Relay",
+//     "slug": "Relay",
+//     "version": "0.0.1",
+//     "orientation": "portrait",
+//     "icon": "./assets/images/icon.png",
+//     "scheme": "relay",
+//     "userInterfaceStyle": "automatic",
+//     "assetBundlePatterns": ["assets/fonts/*"],
+//     "plugins": [
+//       [
+//         "expo-splash-screen",
+//         {
+//           "image": "./assets/images/splash.png",
+//           "resizeMode": "contain",
+//           "backgroundColor": "#000000"
+//         }
+//       ]
+//     ]
+//   }
+// }
