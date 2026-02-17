@@ -2,6 +2,8 @@
  * Theme system for Relay app
  * Designed for accessibility and neurodivergent users
  * Uses calm colors, high contrast, and clear typography
+ *
+ * Maybe some more colorful variants later in the app.
  */
 
 import { Appearance } from "react-native";

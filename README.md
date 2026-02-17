@@ -1,5 +1,9 @@
 # Relay — Communication Shortcuts
 
+> WIP - Work in Progress
+
+> App is currently not finished
+
 ## Overview
 
 Relay is a React Native application designed to reduce friction in non-verbal, high-stress or low-energy communication situations.
@@ -56,6 +60,10 @@ Relay aims to minimize that friction by surfacing concise, ready-made messages w
 - File-based routing (Expo Router)
 
 ---
+
+## Screenshots
+
+![Screenshort: List View](./assets/screenshots/screenshot-1.png) ![Screensort: Card View](./assets/screenshots/screenshot-2.png)
 
 ## Project Structure (Simplified)
 
