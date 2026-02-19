@@ -19,7 +19,20 @@ export const CardStorage = {
   async saveCards(cards: Card[]): Promise<void> {
     try {
       // Filter out template cards if needed (only save user cards)
-      const userCards = cards.filter((card) => card.source === "user");
+      // const userCards = cards.filter((card) => card.source === "user");
+      // const userCards = cards.filter((card) => card.id.startsWith("usr:")); // *** TEST this in emulator
+      // const copiedTemplates = cards.filter((card) => card.id.startsWith("tpl:"));
+
+      // copy all cards
+      const userCards = [...cards];
+      // rename the copied templates to have an id starting with "usr:"
+      userCards.forEach((c) => {
+        if (c.id.startsWith("tpl:")) {
+          const id = c.id.slice(3);
+          c.id = `usr${id}`;
+        }
+      }); // TODO: test and finish !!!!!!!!!!!!!!!!
+
       const json = JSON.stringify(userCards);
       await AsyncStorage.setItem(STORAGE_KEY, json);
       console.log("Saved", userCards.length, "user cards"); // consoooooole
@@ -102,7 +115,32 @@ export function mergeCardsWithTemplates(
     if (!templateIds.has(userCard.id)) {
       merged.push(userCard);
     }
-  });
+  }); // TODO: test and finish !!!!!!!!!!!!!!!!
 
   return merged;
+}
+
+/**
+ * Initialize user cards from templates (one-time setup)
+ * Copies selected or all templates, converts tpl: → usr:, and saves
+ *
+ * @param templates Array of template cards to copy. If not provided, use all.
+ * @returns Array of newly created user cards
+ */
+async function initializeUserCardsFromTemplates(
+  templates?: Card[],
+): Promise<Card[]> {
+  if (!CardStorage.loadCards()) {
+  }
+  // TODO: Convert tpl: → usr:, deep copy templates, save as user cards
+  // For now: just return empty or return existing user cards if already initialized
+
+  // TODO: Implementation
+  // - Filter templates by templateIds if provided
+  // - Deep copy each template
+  // - Convert ID: tpl:X → usr:X-{timestamp} or similar
+  // - Set source: "user"
+  // - Save to storage
+  // - Return new user cards
+  return [];
 }

@@ -56,7 +56,7 @@ Relay aims to minimize that friction by surfacing concise, ready-made messages w
 
 - React Native (Expo)
 - TypeScript
-- AsyncStorage
+- AsyncStorage now, secure (iOS Keychain/ Android Keystore) later
 - File-based routing (Expo Router)
 
 ---
@@ -73,6 +73,13 @@ app/               # Screens
 components/        # Reusable UI
 domain/
   cards/           # Card models, templates, storage
+    ├── Card.ts
+    ├── Card.constants.ts
+    ├── cards.templates.ts
+    ├── cards.storage.ts           (persistence)
+    ├── cards.initialization.ts    (template → user conversion logic)
+    ├── CardsContext.tsx
+    └── useCards.ts
   disclosures/     # Disclosure models and storage
   sets/            # Set models and storage
 hooks/

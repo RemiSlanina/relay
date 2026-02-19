@@ -19,7 +19,7 @@ export type Category =
 export type Tone = "neutral" | "formal" | "urgent" | "minimal" | "explanatory";
 
 export type Card = {
-  id: string;
+  id: string; // starts with: usr: for userCards or tpl: for templates
   category: string;
   priority: number;
   lang: string;
@@ -33,5 +33,5 @@ export type Card = {
   intent?: string;
   tone?: Tone;
   lastEditedAt: string; // ISO date
-  source: "template" | "user";
+  source: "template" | "user"; // don't use for pattern matching, use id.startsWith("usr:") /("tpl")
 };

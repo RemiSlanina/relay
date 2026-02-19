@@ -1,8 +1,8 @@
 // fix bug (STACK)
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Card } from "./Card";
-import { TEMPLATE_CARDS } from "./cards.templates";
 import { CardStorage, mergeCardsWithTemplates } from "./cards.storage";
+import { TEMPLATE_CARDS } from "./cards.templates";
 
 type CardsContextValue = {
   cards: Card[];
@@ -24,17 +24,20 @@ export function CardsProvider({ children }: { children: React.ReactNode }) {
     async function loadSavedCards() {
       try {
         const savedUserCards = await CardStorage.loadCards();
-        const mergedCards = mergeCardsWithTemplates(savedUserCards, TEMPLATE_CARDS);
+        const mergedCards = mergeCardsWithTemplates(
+          savedUserCards,
+          TEMPLATE_CARDS,
+        );
         setCards(mergedCards);
       } catch (error) {
-        console.error('Failed to load saved cards:', error);
+        console.error("Failed to load saved cards:", error);
         // Fall back to just template cards if loading fails
         setCards(TEMPLATE_CARDS);
       } finally {
         setLoaded(true);
       }
     }
-    
+
     loadSavedCards();
   }, []);
 
@@ -62,7 +65,9 @@ export function CardsProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <CardsContext.Provider value={{ cards, getCardById, addCard, updateCard, deleteCard, loaded }}>
+    <CardsContext.Provider
+      value={{ cards, getCardById, addCard, updateCard, deleteCard, loaded }}
+    >
       {children}
     </CardsContext.Provider>
   );
