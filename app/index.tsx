@@ -1,5 +1,6 @@
 import { BorderRadius, Colors, Spacing, Typography } from "@/constants/theme";
 import { useAccessibility } from "@/domain/accessibility/AccessibilityContext";
+import { getFirstLaunchTime } from "@/domain/bootstrap/first-launch";
 import { useCards } from "@/domain/cards/CardsContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation, useRouter } from "expo-router";
@@ -23,6 +24,12 @@ export default function IndexScreen() {
   const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme === "dark" ? "dark" : "light"];
+
+  useEffect(() => {
+    getFirstLaunchTime().then((time) => {
+      console.log("First launch: ", time);
+    });
+  }, []);
 
   useEffect(() => {
     navigation.setOptions({ title: "Relay :: Communication shortcuts" });

@@ -26,8 +26,8 @@ export type Card = {
   title: string;
   disclosureIds?: string[]; // optional, empty by default
   message: string;
-  list?: string[];
-  media?: any[];
+  list?: string[] | null | undefined; // omitted: undefined; can be explicitely set to null too
+  media?: any[] | null | undefined;
   sharing: SharingPolicyType;
   quickAccess: QuickAccessPolicyType;
   intent?: string;
