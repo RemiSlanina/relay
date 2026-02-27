@@ -1,7 +1,11 @@
 // fix bug (STACK)
 import { createContext, useContext, useEffect, useState } from "react";
 import { Card } from "./Card";
-import { CardStorage, mergeCardsWithTemplates } from "./cards.storage";
+import {
+  CardStorage,
+  initializeCards,
+  mergeCardsWithTemplates,
+} from "./cards.storage";
 import { TEMPLATE_CARDS } from "./cards.templates";
 
 type CardsContextValue = {
@@ -16,9 +20,25 @@ type CardsContextValue = {
 const CardsContext = createContext<CardsContextValue | null>(null);
 
 export function CardsProvider({ children }: { children: React.ReactNode }) {
-  const [cards, setCards] = useState<Card[]>(TEMPLATE_CARDS);
+  const [cards, setCards] = useState<Card[]>([]); // [] or TEMPLATE_CARDS
   const [loaded, setLoaded] = useState(false);
 
+  // clear cards once -> worked :)
+  // useEffect(() => {
+  //   CardStorage.clearCards();
+  //   console.log("Cards cleard");
+  // }, []);
+
+  // initialize cards:
+  useEffect(() => {
+    initializeCards().then((initializedCards) => {
+      setCards(initializedCards);
+      setLoaded(true);
+      console.log("Cards initialized; ", initializedCards.length);
+    });
+  }, []);
+
+  // delete old version:
   // Load saved cards when provider initializes
   useEffect(() => {
     async function loadSavedCards() {

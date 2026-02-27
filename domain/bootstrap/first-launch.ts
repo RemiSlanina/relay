@@ -39,3 +39,8 @@ export const getFirstLaunchTime = async (): Promise<{
     return { isFirstLaunch: false, date: null };
   }
 };
+
+// dev friendly reset
+export const resetFirstLaunch = async () => {
+  await AsyncStorage.removeItem(FIRST_LAUNCH_KEY);
+};

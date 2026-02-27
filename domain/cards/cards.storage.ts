@@ -1,8 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  FIRST_LAUNCH_KEY,
-  getFirstLaunchTime,
-} from "../bootstrap/first-launch";
+import { getFirstLaunchTime } from "../bootstrap/first-launch";
 import { Card } from "./Card";
 import { TEMPLATE_CARDS } from "./cards.templates";
 
@@ -255,8 +252,3 @@ export async function initializeCards(): Promise<Card[]> {
     return CardStorage.loadCards();
   }
 }
-
-// dev friendly reset
-export const resetFirstLaunch = async () => {
-  await AsyncStorage.removeItem(FIRST_LAUNCH_KEY);
-};

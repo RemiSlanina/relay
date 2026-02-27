@@ -1,8 +1,10 @@
 import { BorderRadius, Colors, Spacing, Typography } from "@/constants/theme";
 import { useAccessibility } from "@/domain/accessibility/AccessibilityContext";
-// import { getFirstLaunchTime } from "@/domain/bootstrap/first-launch";
+import { resetFirstLaunch } from "@/domain/bootstrap/first-launch";
+import { CardStorage, initializeCards } from "@/domain/cards/cards.storage";
 import { useCards } from "@/domain/cards/CardsContext";
 import { MaterialIcons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation, useRouter } from "expo-router";
 import { useEffect } from "react";
 import {
@@ -15,7 +17,6 @@ import {
   useColorScheme,
 } from "react-native";
 import Animated, { BounceIn, FadeIn, FadeOut } from "react-native-reanimated";
-
 // TODO: sort cards alphabetically (by title)
 // TODO: delete and edit function
 // TODO: add comments for basic types, methods, ... (REALLY NOW!)
@@ -42,7 +43,7 @@ export default function IndexScreen() {
   // }, []);
 
   useEffect(() => {
-    navigation.setOptions({ title: "Relay :: Communication shortcuts" });
+    navigation.setOptions({ title: "Relay _/ _ Communication shortcuts" });
   }, [navigation]);
 
   const router = useRouter();
@@ -63,6 +64,8 @@ export default function IndexScreen() {
         <Text style={[styles.title, { color: theme.text }]}>
           Your saved Cards
         </Text>
+
+        {/* settings */}
         <Pressable
           style={[styles.settingsButton, { backgroundColor: theme.surface }]}
           onPress={() => router.push("/settings")}
@@ -147,6 +150,43 @@ export default function IndexScreen() {
         />
       )}
 
+      {/* ~~~ * debugging section * ~~~ */}
+      <View style={styles.devContainer}>
+        {/* debugging: clear 'ALL cards*/}
+        <Pressable
+          style={[styles.devButton, { backgroundColor: "#744242" }]}
+          onPress={async () => {
+            await CardStorage.clearCards();
+            alert("Cards cleared! Please reload to see changes!");
+          }}
+          accessibilityLabel="Dev only: Delete all cards"
+          accessibilityHint="Dev only: Delete all cards in storage"
+        >
+          <Text>dev only</Text>
+          <Ionicons name="skull-sharp" size={24} color="black" />
+        </Pressable>
+
+        {/* resetFirstLaunch() and re-initialize all cards */}
+        {/* or simply copy them all from templates again (maybe better) */}
+        <Pressable
+          onPress={async () => {
+            await resetFirstLaunch();
+            console.log("First launch reset!");
+            await initializeCards();
+            alert("Cards Re-initialized. Please reload to see changes!");
+          }}
+          style={[
+            styles.devButton,
+            { backgroundColor: "#6a658f", marginRight: 60 },
+          ]}
+          accessibilityLabel="Dev only: Reset first launch"
+        >
+          <Text>dev only</Text>
+          <Ionicons name="reload-circle-outline" size={24} color="black" />
+        </Pressable>
+      </View>
+      {/* / ~~~ * end debugging section * ~~~ */}
+
       {/* Add Card Button - Fixed at bottom right with animation */}
       <Animated.View
         entering={customBounceIn}
@@ -164,6 +204,8 @@ export default function IndexScreen() {
     </View>
   );
 }
+
+/********************************************************/
 
 const styles = StyleSheet.create({
   container: {
@@ -254,25 +296,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 6,
   },
+  devContainer: {
+    position: "absolute",
+    flex: 1,
+    flexDirection: "row",
+    gap: 4,
+    right: 20,
+    bottom: 20,
+  },
+  devButton: {
+    width: 70,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 6,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    backgroundColor: "#a76a6a",
+    opacity: 0.9,
+  },
 });
-
-// ScrollView: (don't forget IMPORT!)
-// export default function IndexScreen() {
-//   const router = useRouter();
-//   const { cards } = useCards();
-
-//   return (
-//     <ScrollView contentContainerStyle={styles.container}>
-//       <Text>Cards</Text>
-//       {cards.map((card) => (
-//         <Pressable
-//           key={card.id}
-//           onPress={() => router.push(`/cards/${card.id}`)}
-//           style={{ paddingVertical: 12 }}
-//         >
-//           <Text style={{ fontSize: 18 }}>{card.title}</Text>
-//         </Pressable>
-//       ))}
-//     </ScrollView>
-//   );
-// }
