@@ -1,6 +1,6 @@
 import { BorderRadius, Colors, Spacing, Typography } from "@/constants/theme";
 import { useAccessibility } from "@/domain/accessibility/AccessibilityContext";
-import { getFirstLaunchTime } from "@/domain/bootstrap/first-launch";
+// import { getFirstLaunchTime } from "@/domain/bootstrap/first-launch";
 import { useCards } from "@/domain/cards/CardsContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation, useRouter } from "expo-router";
@@ -25,11 +25,21 @@ export default function IndexScreen() {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme === "dark" ? "dark" : "light"];
 
-  useEffect(() => {
-    getFirstLaunchTime().then((time) => {
-      console.log("First launch: ", time);
-    });
-  }, []);
+  // call getFirstLaunchTime during init in cards.storage instead
+  // useEffect(() => {
+  //   getFirstLaunchTime().then((time) => {
+  //     console.log("First launch: ", time);
+  //   });
+  // }, []);
+
+  // KEEP THIS
+  //reset firstlaunch
+  // DO NOT DELETE, STILL NEEDED
+  // useEffect(() => {
+  //   resetFirstLaunch().then(() => {
+  //     console.log("Reset First launch");
+  //   });
+  // }, []);
 
   useEffect(() => {
     navigation.setOptions({ title: "Relay :: Communication shortcuts" });

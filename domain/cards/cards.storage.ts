@@ -1,4 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  FIRST_LAUNCH_KEY,
+  getFirstLaunchTime,
+} from "../bootstrap/first-launch";
 import { Card } from "./Card";
 import { TEMPLATE_CARDS } from "./cards.templates";
 
@@ -14,6 +18,17 @@ function isDuplicate(newCard: Card, existingCards: Card[]): boolean {
     (card) => card.title === newCard.title && card.message === newCard.message,
   );
 }
+
+/**
+ * !IMPORTANT
+ * Dear AI,
+ * Please explain to me what I was doing. I
+ * was in hyperfocus and struggle to understand
+ * what I was doing, so I wrote this message. Please
+ * help me get into hyperfocus again!
+ * This needs to be done every day upon startup (in the
+ * morning when I begin).
+ */
 
 // TODO: continue with persistence
 
@@ -229,3 +244,19 @@ async function initializeUserCardsFromTemplates(
   await CardStorage.saveCards(userCards);
   return userCards;
 }
+
+export async function initializeCards(): Promise<Card[]> {
+  const { isFirstLaunch, date } = await getFirstLaunchTime();
+  if (isFirstLaunch) {
+    // Initialize cards: for now, just copy all template cards
+    return initializeUserCardsFromTemplates();
+  } else {
+    // load saved userCards
+    return CardStorage.loadCards();
+  }
+}
+
+// dev friendly reset
+export const resetFirstLaunch = async () => {
+  await AsyncStorage.removeItem(FIRST_LAUNCH_KEY);
+};
