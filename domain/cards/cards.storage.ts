@@ -16,17 +16,6 @@ function isDuplicate(newCard: Card, existingCards: Card[]): boolean {
   );
 }
 
-/**
- * !IMPORTANT
- * Dear AI,
- * Please explain to me what I was doing. I
- * was in hyperfocus and struggle to understand
- * what I was doing, so I wrote this message. Please
- * help me get into hyperfocus again!
- * This needs to be done every day upon startup (in the
- * morning when I begin).
- */
-
 // TODO: continue with persistence
 
 function isTitleMessageListDuplicate(

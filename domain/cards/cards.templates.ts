@@ -808,7 +808,7 @@ export const TEMPLATE_CARDS: Card[] = [
 
   {
     id: "tpl:explanations-processing-en",
-    category: "explanations",
+    category: "capacity",
     priority: 1,
     lang: "en",
     disclosureIds: ["non-speaking", "autism"],
@@ -824,7 +824,7 @@ export const TEMPLATE_CARDS: Card[] = [
 
   {
     id: "tpl:explanations-disability-en",
-    category: "explanations",
+    category: "capacity",
     priority: 1,
     lang: "en",
     title: "Explanations: disability",
@@ -839,7 +839,7 @@ export const TEMPLATE_CARDS: Card[] = [
 
   {
     id: "tpl:explanations-documents-en",
-    category: "explanations",
+    category: "capacity",
     priority: 1,
     lang: "en",
     title: "Explanations: finding documents",

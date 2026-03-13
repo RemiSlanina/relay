@@ -20,7 +20,7 @@ export type Tone = "neutral" | "formal" | "urgent" | "minimal" | "explanatory";
 
 export type Card = {
   id: string; // starts with: usr: for userCards or tpl: for templates
-  category: string;
+  category: Category;
   priority: number;
   lang: string;
   title: string;

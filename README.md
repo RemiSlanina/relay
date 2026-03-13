@@ -65,26 +65,127 @@ Relay aims to minimize that friction by surfacing concise, ready-made messages w
 
 ![Screenshort: List View](./assets/screenshots/screenshot-1.png) ![Screensort: Card View](./assets/screenshots/screenshot-2.png)
 
-## Project Structure (Simplified)
+## Project Structure
+
+### Current Structure
 
 ```
-app/               # Screens
-   cards/
-components/        # Reusable UI
-domain/
-  cards/           # Card models, templates, storage
-    ├── Card.ts
-    ├── Card.constants.ts
-    ├── cards.templates.ts
-    ├── cards.storage.ts           (persistence)
-    ├── cards.initialization.ts    (template → user conversion logic)
-    ├── CardsContext.tsx
-    └── useCards.ts
-  disclosures/     # Disclosure models and storage
-  sets/            # Set models and storage
-hooks/
-constants/         # themes
-assets/
+Relay/
+├── app/
+│   ├── cards/
+│   │   ├── [id].tsx
+│   │   └── create.tsx
+│   ├── _layout.tsx
+│   ├── index.tsx
+│   └── settings.tsx
+├── components/
+│   └── CardView.tsx
+├── constants/
+│   └── theme.ts
+├── domain/
+│   ├── accessibility/
+│   │   └── AccessibilityContext.tsx
+│   ├── bootstrap/
+│   │   └── first-launch.ts
+│   ├── card-sets/
+│   │   ├── card-set.storage.ts
+│   │   ├── card-set.templates.ts
+│   │   └── CardSet.ts
+│   ├── cards/
+│   │   ├── Card.constants.ts
+│   │   ├── Card.ts
+│   │   ├── cards.initialization.ts
+│   │   ├── cards.storage.ts
+│   │   ├── cards.templates.ts
+│   │   └── CardsContext.tsx
+│   └── disclosures/
+│       ├── disclosure.storage.ts
+│       ├── disclosure.templates.ts
+│       ├── Disclosure.ts
+│       └── DisclosureContext.tsx
+├── hooks/
+│   └── useCards.ts
+├── assets/
+│   ├── images/
+│   │   ├── android-icon-background.png
+│   │   ├── android-icon-foreground.png
+│   │   ├── android-icon-monochrome.png
+│   │   ├── favicon.png
+│   │   ├── icon.png
+│   │   ├── logo.png
+│   │   ├── splash-icon.png
+│   │   └── splash.png
+│   └── screenshots/
+│       ├── screenshot-1.png
+│       └── screenshot-2.png
+├── ios/
+├── android/
+├── babel.config.js
+├── package.json
+└── README.md
+```
+
+### Domain-Driven Structure
+
+The project follows a domain-driven design with clear separation:
+
+```
+- **app/** - Screens and navigation
+- **components/** - Reusable UI components
+- **domain/** - Business logic organized by domain
+  - **cards/** - Card models, templates, storage, and context
+  - **card-sets/** - Card set management
+  - **disclosures/** - Disclosure models and storage
+  - **accessibility/** - Accessibility features
+  - **bootstrap/** - First-launch initialization
+- **hooks/** - Custom React hooks
+- **constants/** - Application constants and themes
+- **assets/** - Images and other static assets
+```
+
+## Testing
+
+### Test Structure
+
+Planned test structure for Jest in this project:
+
+```
+**tests**/
+├── domain/
+│ ├── cards/
+│ │ ├── Card.test.ts
+│ │ ├── cards.storage.test.ts
+│ │ ├── cards.templates.test.ts
+│ │ └── CardsContext.test.tsx
+│ ├── card-sets/
+│ │ ├── CardSet.test.ts
+│ │ └── card-set.storage.test.ts
+│ └── disclosures/
+│ ├── Disclosure.test.ts
+│ └── disclosure.storage.test.ts
+├── components/
+│ └── CardView.test.tsx
+├── hooks/
+│ └── useCards.test.ts
+├── bootstrap/
+│ └── first-launch.test.ts
+└── utils/
+└── helpers.test.ts
+
+```
+
+### Running Tests
+
+```bash
+npm test
+# or
+npx jest
+```
+
+### Test Coverage
+
+```bash
+npx jest --coverage
 ```
 
 ## Running Locally
