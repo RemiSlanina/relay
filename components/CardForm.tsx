@@ -6,7 +6,7 @@ import {
   palette,
 } from "@/constants/theme";
 import { useAccessibility } from "@/domain/accessibility/AccessibilityContext";
-import { useCards } from "@/domain/cards/CardsContext";
+import { useCards } from "@/domain/cards";
 import { useState } from "react";
 import {
   Pressable,

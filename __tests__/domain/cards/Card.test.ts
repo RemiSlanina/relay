@@ -1,11 +1,7 @@
 /**
  * Test suite for Card model
  */
-import { Card } from "../../../domain/cards/Card";
-import {
-  QuickAccessPolicy,
-  SharingPolicy,
-} from "../../../domain/cards/Card.constants";
+import { Card, QuickAccessPolicy, SharingPolicy } from "../../../domain/cards";
 
 describe("Card Model", () => {
   it("should create a card with required properties", () => {

@@ -5,8 +5,7 @@ import {
   Spacing,
   Typography,
 } from "@/constants/theme";
-import { Card } from "@/domain/cards/Card";
-import { useCards } from "@/domain/cards/CardsContext";
+import { Card, useCards } from "@/domain/cards";
 import { useDisclosure } from "@/domain/disclosures/DisclosureContext";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";

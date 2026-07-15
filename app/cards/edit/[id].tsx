@@ -1,6 +1,6 @@
 import CardForm from "@/components/CardForm";
 import { Colors } from "@/constants/theme";
-import { useCards } from "@/domain/cards/CardsContext";
+import { useCards } from "@/domain/cards";
 import { useDisclosure } from "@/domain/disclosures/DisclosureContext";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { useLayoutEffect, useState } from "react";

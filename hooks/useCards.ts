@@ -1,3 +1,3 @@
-export { useCards } from "../domain/cards/CardsContext";
+export { useCards } from "../domain/cards";
 
 // consider deleting it

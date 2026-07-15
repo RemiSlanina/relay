@@ -11,7 +11,7 @@
 
 import ErrorBanner from "@/components/ErrorBanner";
 import { AccessibilityProvider } from "@/domain/accessibility/AccessibilityContext";
-import { CardsProvider, useCards } from "@/domain/cards/CardsContext";
+import { CardsProvider, useCards } from "@/domain/cards";
 import { DisclosureProvider } from "@/domain/disclosures/DisclosureContext";
 import { Stack } from "expo-router";
 

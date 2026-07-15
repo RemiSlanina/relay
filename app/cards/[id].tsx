@@ -1,5 +1,5 @@
 import CardView from "@/components/CardView";
-import { useCards } from "@/domain/cards/CardsContext";
+import { useCards } from "@/domain/cards";
 import { Text } from "@react-navigation/elements";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useLayoutEffect } from "react";

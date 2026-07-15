@@ -2,17 +2,7 @@
  * Test suite for Card storage lifecycle
  */
 import { getFirstLaunchTime } from "../../../domain/bootstrap/first-launch";
-import { Card } from "../../../domain/cards/Card";
-import {
-  QuickAccessPolicy,
-  SharingPolicy,
-} from "../../../domain/cards/Card.constants";
-import { CardStorage } from "../../../domain/cards/cards.storage";
-import {
-  copyTemplateToUserCard,
-  importTemplateCard,
-  initializeCards,
-} from "../../../domain/cards/cards.import";
+import { Card, CardStorage, copyTemplateToUserCard, importTemplateCard, initializeCards, QuickAccessPolicy, SharingPolicy } from "../../../domain/cards";
 
 // fake launch
 jest.mock("../../../domain/bootstrap/first-launch", () => ({

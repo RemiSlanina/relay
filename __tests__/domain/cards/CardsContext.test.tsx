@@ -8,14 +8,15 @@ jest.mock("../../../domain/cards/cards.import", () => ({
 }));
 
 import {
+  Card,
+  CardStorage,
+  CardsProvider,
+  initializeCards,
+  useCards,
   QuickAccessPolicy,
   SharingPolicy,
-} from "@/domain/cards/Card.constants";
-import { CardStorage } from "@/domain/cards/cards.storage";
-import { initializeCards } from "@/domain/cards/cards.import";
-import { CardsProvider, useCards } from "@/domain/cards/CardsContext";
+} from "../../../domain/cards";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
-import { Card } from "../../../domain/cards/Card";
 
 // create a test wrapper component
 // const wrapper = ({ children }: { children: React.ReactNode }) => (

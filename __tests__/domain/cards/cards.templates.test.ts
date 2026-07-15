@@ -2,7 +2,7 @@
  * Test suite for card templates
  */
 
-import { TEMPLATE_CARDS } from "../../../domain/cards/cards.templates";
+import { TEMPLATE_CARDS } from "../../../domain/cards";
 
 describe("Card Templates", () => {
   it("should have at least one template", () => {
