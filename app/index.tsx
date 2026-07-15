@@ -1,7 +1,8 @@
 import { BorderRadius, Colors, Spacing, Typography } from "@/constants/theme";
 import { useAccessibility } from "@/domain/accessibility/AccessibilityContext";
 import { resetFirstLaunch } from "@/domain/bootstrap/first-launch";
-import { CardStorage, initializeCards } from "@/domain/cards/cards.storage";
+import { CardStorage } from "@/domain/cards/cards.storage";
+import { initializeCards } from "@/domain/cards/cards.import";
 import { useCards } from "@/domain/cards/CardsContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";

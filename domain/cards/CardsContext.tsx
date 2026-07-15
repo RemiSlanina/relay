@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Card } from "./Card";
-import { CardStorage, initializeCards } from "./cards.storage";
+import { CardStorage } from "./cards.storage";
+import { initializeCards } from "./cards.import";
 
 type CardsContextValue = {
   cards: Card[];

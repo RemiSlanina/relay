@@ -7,12 +7,12 @@ import {
   QuickAccessPolicy,
   SharingPolicy,
 } from "../../../domain/cards/Card.constants";
+import { CardStorage } from "../../../domain/cards/cards.storage";
 import {
-  CardStorage,
   copyTemplateToUserCard,
   importTemplateCard,
   initializeCards,
-} from "../../../domain/cards/cards.storage";
+} from "../../../domain/cards/cards.import";
 
 // fake launch
 jest.mock("../../../domain/bootstrap/first-launch", () => ({

@@ -1,15 +1,18 @@
 jest.mock("../../../domain/cards/cards.storage", () => ({
-  initializeCards: jest.fn().mockResolvedValue([]),
   CardStorage: {
     saveCards: jest.fn().mockResolvedValue(true),
   },
+}));
+jest.mock("../../../domain/cards/cards.import", () => ({
+  initializeCards: jest.fn().mockResolvedValue([]),
 }));
 
 import {
   QuickAccessPolicy,
   SharingPolicy,
 } from "@/domain/cards/Card.constants";
-import { CardStorage, initializeCards } from "@/domain/cards/cards.storage";
+import { CardStorage } from "@/domain/cards/cards.storage";
+import { initializeCards } from "@/domain/cards/cards.import";
 import { CardsProvider, useCards } from "@/domain/cards/CardsContext";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 import { Card } from "../../../domain/cards/Card";
