@@ -45,6 +45,44 @@ Current architecture decisions:
 
 ## 🥺🍞 2026-07-15
 
+### ENOSPC: System limit for number of file watchers reached
+
+Symptoms:
+
+- `npx expo start` fails with `ENOSPC`
+- Jest still passes
+
+Likely cause:
+
+- Linux inotify limit reached (not a Relay bug).
+
+Check:
+
+cat /proc/sys/fs/inotify/max_user_watches
+cat /proc/sys/fs/inotify/max_user_instances
+
+Increase limits if necessary.
+
+### Infrastructure observation:
+
+Metro occasionally fails with:
+
+`ENOSPC: System limit for number of file watchers reached`
+
+Observed behavior (July 2026):
+
+- Restarting alone did not resolve the issue.
+- Reinstalling `node_modules` alone did not resolve the issue.
+- Reinstalling `node_modules` followed by a system restart did resolve it.
+
+Root cause is still unknown.
+Possible relation to Linux file watcher limits (`inotify`).
+
+rm -rf node_modules
+rm package-lock.json
+npm install
+[restart OS]
+
 ### Finished
 
 - Added roadmap.md

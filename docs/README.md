@@ -17,3 +17,4 @@
 
 - notes/breadcrumbs.md
 - notes/developer-conventions.md
+- notes/infrastructure.md
