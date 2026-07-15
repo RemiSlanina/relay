@@ -13,6 +13,42 @@
 > CRUD for disclosures is not implemented yet.
 > Not part of card CRUD completion.
 
+## Current State
+
+Current milestone:
+v0.2
+
+Current branch:
+main
+
+Current focus:
+Disclosure persistence
+
+Roadmap:
+docs/roadmap.md
+
+Backlog:
+docs/backlog.md
+
+---
+
+## 🥺🍞 2026-07-15
+
+### Finished
+
+- Added roadmap.md
+- Added decisions.md
+- Reorganized documentation
+
+### Learned
+
+- ADRs document architectural decisions.
+- Roadmap separates product planning from technical backlog.
+
+### Next
+
+- Disclosure persistence
+
 ## 🥺🍞 2026-07-13
 
 Finished:
