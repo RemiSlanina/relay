@@ -71,7 +71,7 @@
 import { Card } from "./Card";
 import { QuickAccessPolicy, SharingPolicy } from "./Card.constants";
 
-export const TEMPLATE_CARDS: Card[] = [
+export const TEMPLATE_CARDS_EXTRA: Card[] = [
   // ─────────────────────────────
   // Explanations / Apology
   // ─────────────────────────────
