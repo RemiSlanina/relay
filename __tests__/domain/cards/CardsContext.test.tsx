@@ -7,16 +7,16 @@ jest.mock("../../../domain/cards/cards.import", () => ({
   initializeCards: jest.fn().mockResolvedValue([]),
 }));
 
+import { act, renderHook, waitFor } from "@testing-library/react-native";
 import {
   Card,
   CardStorage,
   CardsProvider,
-  initializeCards,
-  useCards,
   QuickAccessPolicy,
   SharingPolicy,
+  initializeCards,
+  useCards,
 } from "../../../domain/cards";
-import { act, renderHook, waitFor } from "@testing-library/react-native";
 
 // create a test wrapper component
 // const wrapper = ({ children }: { children: React.ReactNode }) => (
@@ -172,6 +172,7 @@ describe("CardsContext - edit (updateCard)", () => {
 
   it("should do nothing if card with id doesn't exist", async () => {
     const { result } = renderHook(() => useCards(), { wrapper });
+    const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
 
     await waitFor(() => {
       expect(result.current.loaded).toBe(true);
@@ -189,6 +190,12 @@ describe("CardsContext - edit (updateCard)", () => {
     await waitFor(async () => {
       expect(result.current.hasUnsavedChanges).toBe(false);
     });
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      'updateCard(): no card found with id "usr:test-123".',
+    );
+
+    warnSpy.mockRestore();
 
     // should not add a new card
     expect(result.current.cards.length).toBe(initialLength);
