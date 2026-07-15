@@ -1,49 +1,66 @@
+/**
+ * Persistent storage for user-created cards.
+ *
+ * Responsibilities:
+ * - store and load the user's card collection
+ * - hide AsyncStorage from the rest of the application
+ * - provide a stable API for future storage migrations
+ *
+ * Persistence model:
+ * - best effort (operations never throw)
+ * - failures are logged and reported through return values
+ * - callers remain responsible for user-facing error handling
+ *
+ * Duplicate detection currently compares only title and message.
+ * Additional comparison strategies (lists, media, etc.) may be
+ * added in the future.
+ */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Card } from "./Card";
 
 const STORAGE_KEY = "@relay_cards_v1";
 
-// Later, I could allow fetching templates after init, as well as
+// FUTURE: Later, I could allow fetching templates after init, as well as
 // duplicating cards.
 // However, these should be opened in edit view, and if a user wants to save
 // duplicates without any changes, I could just alert "Card is duplicate. Save anyway?"
 // However, as I need to implement more planned features, best write this duplicate checkers as modules (lists,
 // media, ...) and an overarching isDuplicate() function (refactor this)
 /**
- * Function to check for duplicates, for later use in checking before saving cards/templates duplicated
- * by the user. User gets an alert if they try to save cards that are purely duplicates.
+ * Determines whether a card is considered a duplicate.
  *
- * Next feature I want to implement is List.
- * @param newCard
- * @param existingCards
- * @returns true if cards are equal except for id (is always unique)
+ * Duplicate detection is intentionally delegated to helper functions
+ * so additional comparison strategies can be added over time.
+ *
+ * @param newCard Card being added.
+ * @param existingCards Existing user cards.
+ * @returns `true` if an equivalent card already exists.
  */
 function isDuplicate(newCard: Card, existingCards: Card[]): boolean {
   return isDuplicateTitleMessage(newCard, existingCards);
 }
 
+/**
+ * Compares cards by title and message only.
+ */
 function isDuplicateTitleMessage(
   newCard: Card,
   existingCards: Card[],
 ): boolean {
-  /**
-   * check if two cards are duplicates
-   * check title and message for now
-   * simpler version (no check of lists)
-   */
   return existingCards.some(
     (card) => card.title === newCard.title && card.message === newCard.message,
   );
 }
 
+/**
+ * Compares cards by title, message, and list contents.
+ *
+ * List order is ignored.
+ */
 function isDuplicateTitleMessageList(
   newCard: Card,
   existingCards: Card[],
 ): boolean {
-  /**
-   * Check if two cards are duplicates:
-   * - Compare title, message, and list (array of strings)
-   */
   return existingCards.some((card) => {
     // Compare title and message
     const isTitleAndMessageSame =
@@ -56,7 +73,6 @@ function isDuplicateTitleMessageList(
     // ["milk", "bread"] (array with items)
 
     // Compare lists (arrays of strings)
-    // If both have no list (undefined or null), skip list check
     if (!card.list && !newCard.list) {
       return isTitleAndMessageSame;
     }
@@ -76,39 +92,21 @@ function isDuplicateTitleMessageList(
 }
 
 /**
- * CardStorage - Handles persistent storage of user-created cards
+ * Storage service for user-created cards.
  *
- * Features:
- * - Automatic JSON serialization/deserialization
- * - Error handling with graceful fallbacks
- * - Versioned storage key for future migrations
+ * This object provides the application's persistence API for cards.
+ * All interaction with AsyncStorage should go through this module.
  */
-
 export const CardStorage = {
   /**
-   * Save all cards to persistent storage
-   * @param cards Array of cards to save
+   * Adds a single card to persistent storage.
+   *
+   * Existing cards are preserved.
+   * The updated collection is written back to storage.
+   *
+   * Duplicate detection currently logs a warning but does not prevent
+   * saving the card.
    */
-
-  async saveCard(card: Card): Promise<boolean> {
-    /**
-     * save one card to storage if it is not a duplicate
-     */
-    try {
-      const existingCards = await this.loadCards(); // Returns [] if no cards exist
-      if (isDuplicate(card, existingCards)) {
-        // Future TODO: should check for duplicates and
-        // prompt the user whether they want to save duplicate cards (turn off in settings)
-        console.log("Duplicate card detected: CardStorage saveCard()...");
-      }
-      const updatedCards = [...existingCards, card];
-      return this.saveCards(updatedCards);
-    } catch (e) {
-      console.error("Failed to save card, method saveCard, ", e);
-      return false;
-    }
-  },
-
   async saveCards(cards: Card[]): Promise<boolean> {
     try {
       const newCards = [...cards];
@@ -123,8 +121,36 @@ export const CardStorage = {
   },
 
   /**
-   * Load saved cards from persistent storage
-   * @returns Array of saved user cards, or empty array if none exist
+   * Adds a single card to persistent storage.
+   *
+   * This is a convenience wrapper around `saveCards()`.
+   * The existing collection is loaded, the new card is appended,
+   * and the updated collection is written back to storage.
+   *
+   * FUTURE:
+   * Duplicate detection may prompt the user before saving.
+   */
+  async saveCard(card: Card): Promise<boolean> {
+    try {
+      const existingCards = await this.loadCards(); // Returns [] if no cards exist
+      if (isDuplicate(card, existingCards)) {
+        // FUTURE: should check for duplicates and
+        // prompt the user whether they want to save duplicate cards (turn off in settings)
+        console.log("Duplicate card detected: CardStorage saveCard()...");
+      }
+      const updatedCards = [...existingCards, card];
+      return this.saveCards(updatedCards);
+    } catch (e) {
+      console.error("Failed to save card, method saveCard, ", e);
+      return false;
+    }
+  },
+
+  /**
+   * Loads the user's card collection.
+   *
+   * Returns an empty collection if no cards have been stored yet
+   * or if loading fails.
    */
   async loadCards(): Promise<Card[]> {
     try {
@@ -132,13 +158,14 @@ export const CardStorage = {
       return json ? JSON.parse(json) : [];
     } catch (error) {
       console.error("Failed to load cards:", error);
-      return []; // Return empty array on error
+      return [];
     }
   },
 
   /**
-   * Clear all saved cards from storage
-   * Useful for testing or when user wants to reset
+   * Removes all stored user cards.
+   *
+   * Primarily intended for testing and future reset functionality.
    */
   async clearCards(): Promise<void> {
     try {
@@ -149,8 +176,7 @@ export const CardStorage = {
   },
 
   /**
-   * Check if any cards are stored
-   * @returns true if cards exist in storage, false otherwise
+   * Returns whether a stored card collection exists.
    */
   async hasSavedCards(): Promise<boolean> {
     try {

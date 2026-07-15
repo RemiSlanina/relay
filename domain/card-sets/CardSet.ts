@@ -1,4 +1,4 @@
-// TODO : update from categories?: string[]; to categories?: Category[]; if using premade categories
+// FUTURE : update from categories?: string[]; to categories?: Category[]; if using premade categories
 // later:
 // currentTone = "neutral"
 // visibleCards = cards.filter(c => c.tone === currentTone)

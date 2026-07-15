@@ -2,7 +2,15 @@
  * Test suite for Card storage lifecycle
  */
 import { getFirstLaunchTime } from "../../../domain/bootstrap/first-launch";
-import { Card, CardStorage, copyTemplateToUserCard, importTemplateCard, initializeCards, QuickAccessPolicy, SharingPolicy } from "../../../domain/cards";
+import {
+  Card,
+  CardStorage,
+  copyTemplateToUserCard,
+  importTemplateCard,
+  initializeCards,
+  QuickAccessPolicy,
+  SharingPolicy,
+} from "../../../domain/cards";
 
 // fake launch
 jest.mock("../../../domain/bootstrap/first-launch", () => ({
@@ -33,7 +41,7 @@ describe("initializeCards", () => {
       isFirstLaunch: true,
       date: "2026-05-24",
     });
-    // TODO: after setup implementation, this might change
+    // FUTURE: May change if initialization/setup behavior changes.
     // First call: should initialize all cards in TEMPLATE_CARDS (later: users chooses!!)
     const firstCards = await initializeCards();
     expect(firstCards.length).toBeGreaterThan(0);

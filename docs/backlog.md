@@ -42,9 +42,11 @@ Disclosures:
 - either add a separate hasUnsavedChanges to CardsContext later and check both
 - or even add a hybid hasGlobalUnsavedChanges that combines both into a global state.
 
-### Templates
+### Template refactor
 
-TODO: refactor templates using the following model:
+see [Templates: Future Library](/docs/design/cards.templates.md)
+
+- [ ] refactor templates using the following model:
 
 instead of
 
@@ -85,3 +87,7 @@ domain/cards/templates/
 - Explore createdBy field
 - Explore sharedBy field
 - Design ownership model
+
+### Disclosure Code
+
+- rename useDisclosure() to useDisclosures()

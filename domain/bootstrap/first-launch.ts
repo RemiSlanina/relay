@@ -1,24 +1,46 @@
+/**
+ * First launch detection.
+ *
+ * This module tracks whether the application has been launched before.
+ * It provides the basis for first-time setup flows like template
+ * initialization.
+ */
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// Attention/TODO:
-// App reinstall: FIRST_LAUNCH_KEY gone
-// Clear app data: FIRST_LAUNCH_KEY gone
-// true persistence => possibly switch to backend later.
+/**
+ * QUESTION / FUTURE:
+ *
+ * FIRST_LAUNCH_KEY only persists as long as the app's local storage exists.
+ *
+ * The key is lost when:
+ * - the app is uninstalled and reinstalled
+ * - the user clears app data
+ *
+ * If Relay later requires persistence across reinstalls,
+ * the first-launch state may need to be stored outside
+ * local device storage.
+ */
 
 /**
- * FIRST_LAUNCH_KEY stores the date of first launch in ISO String format
- * this key is used to determine if setup needs to be showed
+ * FIRST_LAUNCH_KEY stores the timestamp of the application's first launch.
  *
- * During testing and debugging this will determine if templates will be copied
- * to storage (i guess?)
+ * It is used to determine whether first-time setup should be performed.
+ *
+ * During development, resetting this key causes Relay to behave as if it
+ * were launched for the first time, allowing template initialization and
+ * onboarding to be tested again.
  */
 
 export const FIRST_LAUNCH_KEY = "first_launch_time";
 
 /**
- * GETTER = SETTER.
- * get FIRST_LAUNCH_KEY from storage.
- * if none exists, CREATE one
+ * Returns the application's first-launch state.
+ *
+ * If no first-launch timestamp exists, one is created automatically
+ * and the current launch is treated as the first launch.
+ *
+ * @returns The stored timestamp together with the first-launch flag.
  */
 export const getFirstLaunchTime = async (): Promise<{
   date: Date | null;
@@ -40,7 +62,11 @@ export const getFirstLaunchTime = async (): Promise<{
   }
 };
 
-// dev friendly reset
+/**
+ * Removes the first-launch marker.
+ *
+ * Intended for development and testing.
+ */
 export const resetFirstLaunch = async () => {
   await AsyncStorage.removeItem(FIRST_LAUNCH_KEY);
 };

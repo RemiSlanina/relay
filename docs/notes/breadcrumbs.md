@@ -1,5 +1,10 @@
 # Bread crumbs 🥺🍞
 
+A development journal intended primarily for Future Me.
+
+This file records progress, architectural discoveries, and the next place
+to continue working after a break.
+
 ---
 
 > Persistence model:
@@ -16,7 +21,7 @@
 ## Current State
 
 Current milestone:
-v0.2
+v0.2 Completing the Foundation
 
 Current branch:
 main
@@ -24,11 +29,17 @@ main
 Current focus:
 Disclosure persistence
 
+Last completed milestone:
+v0.1 Foundation
+
 Roadmap:
-docs/roadmap.md
+[Roadmap](/docs/roadmap.md)
 
 Backlog:
-docs/backlog.md
+[Backlog](/docs/backlog.md)
+
+Current architecture decisions:
+[Decisions](/docs/decisions.md)
 
 ---
 
@@ -37,19 +48,56 @@ docs/backlog.md
 ### Finished
 
 - Added roadmap.md
-- Added decisions.md
-- Reorganized documentation
+- Added decisions.md (ADR log)
+- Added developer conventions
+- Reorganized project documentation
+- Introduced card domain barrel exports
+- Moved card initialization into cards.import.ts
+- Started documenting the cards domain
+- Added module and API documentation for:
+  - cards.import
+  - cards.storage
+  - CardsContext
+  - Card
+  - Card.constants
+  - first-launch
+  - template modules
+- Introduced design documentation (docs/design)
 
 ### Learned
 
-- ADRs document architectural decisions.
-- Roadmap separates product planning from technical backlog.
+- ADRs document architectural decisions rather than implementation.
+- Separate API documentation from product design notes.
+- `rg` is useful for large-scale refactoring and documentation work.
+- Barrel exports simplify future refactoring.
 
 ### Next
 
-- Disclosure persistence
+- Finish remaining documentation.
+- Move older design notes into docs/design/.
+- Start disclosure persistence.
 
-## 🥺🍞 2026-07-13
+> There will come a day of more documentation.
+> A day of disclosures and privacy concerns.
+> A day of careful wording, and wording that should probably be rewritten tomorrow.
+> A day of tweaking and despair.
+>
+> A day of more code.
+> But today is not that day.
+
+### Notes
+
+Documentation style is now considered stable.
+
+New modules should include:
+
+- module documentation
+- exported API documentation
+- QUESTION/FUTURE notes where architectural constraints exist
+
+Long-term design ideas should live in docs/design/ rather than source files.
+
+## 🥺🍞 2026-07-14
 
 Finished:
 

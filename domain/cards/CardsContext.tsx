@@ -1,26 +1,82 @@
+/**
+ * React Context for managing the application's card collection.
+ *
+ * This module provides a centralized API for accessing and modifying
+ * the user's cards throughout the application.
+ *
+ * Responsibilities:
+ * - initialize the user's card collection
+ * - expose card state through React Context
+ * - automatically persist changes
+ * - expose persistence failures to the UI
+ */
+
 import { createContext, useContext, useEffect, useState } from "react";
 import { Card, CardStorage, initializeCards } from ".";
 
+/**
+ * Public API exposed by the cards context.
+ */
 type CardsContextValue = {
+  /**
+   * The current collection of user cards.
+   */
   cards: Card[];
+
+  /**
+   * Retrieves a card by its ID.
+   * @returns The card with the matching ID, or undefined if not found.
+   */
   getCardById: (id: string) => Card | undefined;
+
+  /**
+   * Adds a card to the current collection.
+   */
   addCard: (card: Card) => void;
+
+  /**
+   * Updates an existing card in the collection.
+   * The updated card will be automatically persisted.
+   */
   updateCard: (card: Card) => void;
+
+  /**
+   * Removes a card from the collection by its ID.
+   * The change will be automatically persisted.
+   */
   deleteCard: (cardId: string) => void;
-  loaded: boolean; // Track if initial load is complete
+
+  /**
+   * Indicates whether card initialization has completed.
+   */
+  loaded: boolean;
+
+  /**
+   * Error message from the last persistence failure, or null if successful.
+   */
   persistenceError: string | null;
+
+  /**
+   * Indicates whether local changes have not yet been persisted.
+   */
   hasUnsavedChanges: boolean;
 };
 
 const CardsContext = createContext<CardsContextValue | null>(null);
 
+/**
+ * Provides the cards context to the component tree.
+ *
+ * This component owns the application's card state and coordinates
+ * initialization, updates, and persistence.
+ */
 export function CardsProvider({ children }: { children: React.ReactNode }) {
-  const [cards, setCards] = useState<Card[]>([]); // [] or TEMPLATE_CARDS
+  const [cards, setCards] = useState<Card[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [persistenceError, setPersistenceError] = useState<string | null>(null);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState<boolean>(false);
 
-  // initialize cards:
+  // Initialize cards on mount by loading from storage or templates.
   useEffect(() => {
     const loadCards = async () => {
       const initializedCards = await initializeCards();
@@ -32,7 +88,7 @@ export function CardsProvider({ children }: { children: React.ReactNode }) {
     loadCards();
   }, []);
 
-  // Save cards whenever they change (after initial load)
+  // Automatically persist cards whenever they change (after initial load).
   useEffect(() => {
     if (!loaded) return;
 
@@ -40,12 +96,11 @@ export function CardsProvider({ children }: { children: React.ReactNode }) {
       setHasUnsavedChanges(true);
       try {
         const ok = await CardStorage.saveCards(cards);
-        //console.log("ok: ", ok);
 
         if (!ok) {
           console.error("saveCards() reported failure.");
           setPersistenceError("Could not save changes.");
-          // Future TODO:
+          // FUTURE: Retry failed persistence automatically.
           // - track whether there are unsaved changes
           // - retry failed persistence
           // - warn before closing if changes are still unsaved
@@ -71,7 +126,7 @@ export function CardsProvider({ children }: { children: React.ReactNode }) {
   }
 
   function updateCard(updated: Card) {
-    //setCards((prev) => prev.map((c) => (c.id === card.id ? card : c)));
+    // Prevent accidental addition of new cards via updateCard.
     setCards((prev) => {
       let changed = false;
 
@@ -84,7 +139,7 @@ export function CardsProvider({ children }: { children: React.ReactNode }) {
         return updated;
       });
       if (!changed) {
-        // no card with this id was found
+        // No card with this ID was found.
         console.warn(`updateCard(): no card found with id "${updated.id}".`);
         return prev;
       }
@@ -93,13 +148,7 @@ export function CardsProvider({ children }: { children: React.ReactNode }) {
   }
 
   function deleteCard(cardId: string) {
-    // console.log("Context deleting:", cardId);
-    setCards((prev) => {
-      // console.log("Before:", prev.length);
-      const next = prev.filter((c) => c.id !== cardId);
-      // console.log("After:", next.length);
-      return next;
-    });
+    setCards((prev) => prev.filter((c) => c.id !== cardId));
   }
 
   return (
@@ -120,6 +169,14 @@ export function CardsProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * Hook to access the cards context.
+ *
+ * Returns the current cards state and operations for managing cards.
+ *
+ * @returns The cards context value.
+ * @throws Error if used outside of a CardsProvider.
+ */
 export function useCards() {
   const ctx = useContext(CardsContext);
   if (!ctx) {

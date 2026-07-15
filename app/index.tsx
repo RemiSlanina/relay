@@ -17,7 +17,6 @@ import {
 } from "react-native";
 import Animated, { BounceIn, FadeIn, FadeOut } from "react-native-reanimated";
 // TODO: sort cards alphabetically (by title)
-// TODO: add comments for basic types, methods, ... (REALLY NOW!)
 
 export default function IndexScreen() {
   const navigation = useNavigation();
