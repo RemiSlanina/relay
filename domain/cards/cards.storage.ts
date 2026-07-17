@@ -1,5 +1,5 @@
 /**
- * Persistent storage for user-created cards.
+ * Persistent storage for the user's card collection.
  *
  * Responsibilities:
  * - store and load the user's card collection
@@ -92,24 +92,24 @@ function isDuplicateTitleMessageList(
 }
 
 /**
- * Storage service for user-created cards.
+ * Storage service for the user's card collection.
  *
  * This object provides the application's persistence API for cards.
  * All interaction with AsyncStorage should go through this module.
  */
 export const CardStorage = {
   /**
-   * Adds a single card to persistent storage.
+   * Persists the current card collection.
    *
-   * Existing cards are preserved.
-   * The updated collection is written back to storage.
+   * Replaces the previously stored collection with the provided one.
    *
    * Duplicate detection currently logs a warning but does not prevent
    * saving the card.
    */
+  // TODO: maybe rename saveCards to something that is easier to understand?
   async saveCards(cards: Card[]): Promise<boolean> {
     try {
-      const newCards = [...cards];
+      const newCards = [...cards]; // TODO: simplify this (do not need it)
       const json = JSON.stringify(newCards);
       await AsyncStorage.setItem(STORAGE_KEY, json);
       return true;
@@ -155,7 +155,13 @@ export const CardStorage = {
   async loadCards(): Promise<Card[]> {
     try {
       const json = await AsyncStorage.getItem(STORAGE_KEY);
-      return json ? JSON.parse(json) : [];
+      if (json == null) return [];
+      const parsed = JSON.parse(json);
+
+      if (!Array.isArray(parsed) || !parsed.every(isCard)) {
+        return [];
+      }
+      return parsed;
     } catch (error) {
       console.error("Failed to load cards:", error);
       return [];
@@ -163,7 +169,7 @@ export const CardStorage = {
   },
 
   /**
-   * Removes all stored user cards.
+   * Removes all stored cards from the user's collection.
    *
    * Primarily intended for testing and future reset functionality.
    */
@@ -188,3 +194,13 @@ export const CardStorage = {
     }
   },
 };
+
+function isCard(value: unknown): value is Card {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "id" in value &&
+    "title" in value &&
+    "message" in value
+  );
+}

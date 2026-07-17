@@ -43,6 +43,31 @@ Current architecture decisions:
 
 ---
 
+## 🥺🍞 2026-07-17
+
+### Finished
+
+- Added disclosure storage layer
+- Added disclosure initialization from templates
+- Added initial storage tests for disclosures
+- Reused the card persistence architecture for disclosures
+- Fixed disclosure ID generation during initialization
+
+### Learned
+
+- AsyncStorage mocks may behave differently from the real implementation.
+- `jest.fn()` returns `undefined` unless configured otherwise.
+- Test infrastructure deserves the same debugging attention as production code.
+
+### Next
+
+- Wire DisclosureContext to persistent storage.
+- Implement disclosure CRUD (create, edit, delete).
+- Decide on `disclosure` vs `disclosures` naming.
+- Learn Jest mocking in more depth.
+
+---
+
 ## 🥺🍞 2026-07-15
 
 ### ENOSPC: System limit for number of file watchers reached
@@ -101,6 +126,11 @@ npm install
   - first-launch
   - template modules
 - Introduced design documentation (docs/design)
+
+- Verified application after refactoring:
+  - Jest: 25 tests passing
+  - Metro starts successfully
+  - Manual smoke test passed
 
 ### Learned
 

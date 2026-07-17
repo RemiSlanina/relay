@@ -10,6 +10,7 @@
  */
 
 import { getFirstLaunchTime } from "../bootstrap/first-launch";
+import { templateIdToUserId } from "../common/entity-id";
 import { Card } from "./Card";
 import { CardStorage } from "./cards.storage";
 import { TEMPLATE_CARDS } from "./cards.templates";
@@ -76,22 +77,10 @@ export async function initializeCards(): Promise<Card[]> {
 export function copyTemplateToUserCard(template: Card): Card {
   return {
     ...template,
-    id: `usr${template.id.slice(3)}-${Date.now()}`,
+    id: templateIdToUserId(template.id),
     lastEditedAt: `${Date.now()}`,
     source: "user", // FUTURE: later update this only if the last edit was after FIRST_LAUNCH_KEY
   };
-}
-
-/**
- * Imports a single template card into the user's collection.
- *
- * This is a convenience wrapper around importTemplateCards().
- *
- * @param template Template card to import.
- * @returns Updated user card collection.
- */
-export async function importTemplateCard(template: Card): Promise<Card[]> {
-  return importTemplateCards([template]);
 }
 
 /**

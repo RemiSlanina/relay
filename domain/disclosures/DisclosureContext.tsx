@@ -5,9 +5,10 @@
  * returns a context provider and use disclosure
  */
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Disclosure } from "./Disclosure";
-import { DISCLOSURE_TEMPLATES } from "./disclosure.templates";
+import { DisclosureStorage } from "./disclosure.storage";
+import { initializeDisclosures } from "./disclosures.import";
 
 type DisclosureValue = {
   disclosures: Disclosure[];
@@ -21,10 +22,75 @@ export function DisclosureProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [disclosures] = useState<Disclosure[]>(DISCLOSURE_TEMPLATES);
+  const [disclosures, setDisclosures] = useState<Disclosure[]>([]);
+  const [loaded, setLoaded] = useState<boolean>(false);
+  const [persistenceError, setPersistenceError] = useState<string | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState<boolean>(false);
+
+  // Init Disclosures on mount
+  useEffect(() => {
+    const loadDisclosures = async () => {
+      const initializedDisclosures = await initializeDisclosures();
+      console.log(
+        "inside DisclosureProvider useEffect, just called initializeDisclosures",
+      );
+      console.log(`initialized disclosures `, initializedDisclosures);
+
+      setDisclosures(initializedDisclosures);
+      setLoaded(true);
+    };
+
+    loadDisclosures();
+  }, []);
+
+  // useEffect(() => {
+  //   const clear = async () => {
+  //     await AsyncStorage.clear();
+  //     console.log("AsyncStorage cleared");
+  //     await AsyncStorage.clear();
+
+  //     const keys = await AsyncStorage.getAllKeys();
+  //     console.log("keys after clear:", keys);
+  //   };
+
+  //   clear();
+  // }, []);
+
+  // Automatically persist cards whenever they change (after initial load).
+  useEffect(() => {
+    if (!loaded) return;
+    if (disclosures.length === 0) return;
+
+    console.log("disclosures inside useEffect: ", disclosures);
+
+    const persistDisclosures = async () => {
+      setHasUnsavedChanges(true);
+      try {
+        const ok = await DisclosureStorage.saveDisclosures(disclosures);
+
+        if (!ok) {
+          console.error("saveDisclosures reported a failure.");
+          setPersistenceError("Could not save changes");
+        } else {
+          setPersistenceError(null);
+          setHasUnsavedChanges(false);
+        }
+      } catch (error) {
+        console.error("saveDisclosures threw: ", error);
+        setPersistenceError("Could not save changes.");
+      }
+    };
+    persistDisclosures();
+  }, [disclosures, loaded]);
 
   function getDisclosureById(id: string) {
     return disclosures.find((discl) => discl.id === id);
+  }
+  function addDisclosure(disclosure: Disclosure) {
+    setDisclosures((prev) => [...prev, disclosure]);
+  }
+  function deleteDisclosure(disclossureId: string) {
+    setDisclosures((prev) => prev.filter((d) => d.id === disclossureId));
   }
 
   return (
@@ -41,17 +107,3 @@ export function useDisclosure() {
   }
   return ctx;
 }
-
-// if I wanted to update the original array, i would do it like this:
-//
-// const [disclosures, setDisclosures] = useState<Disclosure[]>(DISCLOSURE_TEMPLATES);
-
-// // Add a new disclosure
-// const addDisclosure = (newDisclosure: Disclosure) => {
-//   setDisclosures([...disclosures, newDisclosure]);
-// };
-
-// however, i want to save any updates in storage. i actually will want to modify my app later on:
-// the original array of templates should only be shown upon shipping to let the users decide which templates to keep
-// the items in the storage will then be loaded upon startup, and the templates will still be accessible in the background
-// (in case the users decide to use some of the templates later)

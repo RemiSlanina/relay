@@ -6,7 +6,7 @@ import {
   Card,
   CardStorage,
   copyTemplateToUserCard,
-  importTemplateCard,
+  importTemplateCards,
   initializeCards,
   QuickAccessPolicy,
   SharingPolicy,
@@ -104,7 +104,7 @@ describe("Load Card if not First Launch", () => {
   });
 });
 
-describe("Import Template Card", () => {
+describe("Import Template Cards", () => {
   it("should copy and add a template card to existing user cards array", async () => {
     (getFirstLaunchTime as jest.Mock).mockResolvedValue({
       isFirstLaunch: false,
@@ -127,7 +127,7 @@ describe("Import Template Card", () => {
     jest.spyOn(CardStorage, "loadCards").mockResolvedValue(fakeCards);
     jest.spyOn(CardStorage, "saveCards").mockResolvedValue(true);
 
-    const mixedCards = await importTemplateCard(template);
+    const mixedCards = await importTemplateCards([template]);
 
     expect(CardStorage.saveCards).toHaveBeenCalled();
     expect(mixedCards).toHaveLength(2);
