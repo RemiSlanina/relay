@@ -47,6 +47,8 @@ Current architecture decisions:
 
 ### Finished
 
+- Expanded DisclosureStorage test coverage
+
 - Removed `saveCard()` and `saveDisclosure()` convenience wrappers.
 - Removed wrapper-specific tests.
 
@@ -59,14 +61,26 @@ Updating a single entity requires domain logic
 (load → modify → save), which belongs in the Context rather
 than the persistence layer.
 
-Test Suites: 5 passed, 5 total
-Tests: 26 passed, 26 total
-
-### Open question
+### Open question (see backlog)
 
 Should imported disclosures retain an optional `templateId`
 to preserve their origin, or did this become obsolete? Likewise for cards templateId: Is the relationship unnecessary?
 (I believe I wanted to track and prevent multiple accidental cloning actions later in import.)
+
+### Next
+
+- Finish edge-case tests for DisclosureStorage
+  - malformed JSON
+  - invalid data
+  - AsyncStorage failures
+  - clearDisclosures()
+- Mirror proper Storage tests in cards
+- Move import tests to import
+
+### Tests
+
+Test Suites: 5 passed, 5 total
+Tests: 30 passed, 30 total
 
 ## 🥺🍞 2026-07-17
 

@@ -91,3 +91,11 @@ domain/cards/templates/
 ### Disclosure Code
 
 - rename useDisclosure() to useDisclosures()
+
+### templateId in disclosures (and cards)
+
+Should imported disclosures retain an optional `templateId`
+to preserve their origin, or did this become obsolete?
+Likewise for cards templateId: Is the relationship unnecessary?
+(I believe I wanted to track and prevent multiple accidental cloning actions later in import.)
+Maybe look at this again when implementing import (not during setup, later imports from tmpl or sharing).

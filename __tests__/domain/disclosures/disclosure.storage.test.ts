@@ -1,4 +1,5 @@
-import { Disclosure } from "@/domain/disclosures";
+import { Disclosure, DisclosureStorage } from "@/domain/disclosures";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getFirstLaunchTime } from "../../../domain/bootstrap/first-launch";
 import { initializeDisclosures } from "../../../domain/disclosures/disclosures.import";
 
@@ -47,10 +48,68 @@ describe("initializeDisclosures", () => {
   });
 });
 
+// these are the tests that belong in __tests__/domain/disclosures/disclosure.storage.test.ts
+// TODO: mirror them in __tests__/domain/cards/cards.storage.test.ts and move import tests to cards.import.tests.ts
+describe("DisclosureStorage", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  it("should save a disclosure", async () => {
+    const disclosureToSave = makeTemplateDisclosure();
+
+    const setItem = jest.spyOn(AsyncStorage, "setItem").mockResolvedValue();
+
+    const ok = await DisclosureStorage.saveDisclosures([disclosureToSave]);
+
+    expect(ok).toBe(true);
+    expect(setItem).toHaveBeenCalledWith(
+      "@relay_disclosure_v1",
+      JSON.stringify([disclosureToSave]),
+    );
+  });
+
+  it("should load a disclosure", async () => {
+    const fakeDisclosures = [
+      {
+        id: "usr:test-2",
+        text: "Mock text 1",
+        lastEditedAt: "2026-07-23",
+      } as Disclosure,
+      {
+        id: "usr:test-3",
+        text: "Mock text 2",
+        lastEditedAt: "2026-07-23",
+      } as Disclosure,
+    ];
+
+    const getItem = jest
+      .spyOn(AsyncStorage, "getItem")
+      .mockResolvedValue(JSON.stringify(fakeDisclosures));
+
+    const result = await DisclosureStorage.loadDisclosures();
+
+    expect(result).toStrictEqual(fakeDisclosures);
+  });
+
+  it("should return false when AsyncStorage fails", async () => {
+    const errorSyp = jest.spyOn(console, "error").mockImplementation(() => {});
+    const setItem = jest
+      .spyOn(AsyncStorage, "setItem")
+      .mockRejectedValue(new Error("boom"));
+    const ok = await DisclosureStorage.saveDisclosures([]);
+    expect(ok).toBe(false);
+    errorSyp.mockRestore();
+  });
+  it("should return an empty array if Async returns null", async () => {
+    jest.spyOn(AsyncStorage, "getItem").mockResolvedValue(null);
+    expect(await DisclosureStorage.loadDisclosures()).toEqual([]);
+  });
+});
+
 // ****************** helpers ******************
 function makeTemplateDisclosure() {
   return {
-    id: "usr:test-2",
+    id: "usr:test-1",
     text: "I am a mocked disclosure.",
     lastEditedAt: "2026-07-23",
   } as Disclosure;

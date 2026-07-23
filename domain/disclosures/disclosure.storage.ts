@@ -32,8 +32,8 @@ export const DisclosureStorage = {
   async loadDisclosures(): Promise<Disclosure[]> {
     try {
       const json = await AsyncStorage.getItem(STORAGE_KEY);
-      console.log("json:", json);
-      console.log(typeof json);
+      //console.log("json:", json);
+      //console.log(typeof json);
       if (json == null) return [];
       const parsed = JSON.parse(json);
       if (!Array.isArray(parsed) || !parsed.every(isDisclosure)) return [];
@@ -67,6 +67,11 @@ export const DisclosureStorage = {
     }
   },
 
+  /**
+   * Removes all stored disclosures from the user's collection.
+   *
+   * Primarily intended for testing and future reset functionality.
+   */
   async clearDisclosures(): Promise<void> {
     try {
       await AsyncStorage.removeItem(STORAGE_KEY);
@@ -77,9 +82,8 @@ export const DisclosureStorage = {
 };
 
 /**
- * Removes all stored disclosures from the user's collection.
- *
- * Primarily intended for testing and future reset functionality.
+ * Helper function:
+ * Validate disclosure for loading from Async to prevent malformed data.
  */
 function isDisclosure(value: unknown): value is Disclosure {
   return (
