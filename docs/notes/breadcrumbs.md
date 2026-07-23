@@ -43,6 +43,31 @@ Current architecture decisions:
 
 ---
 
+## 🥺🍞 2026-07-23
+
+### Finished
+
+- Removed `saveCard()` and `saveDisclosure()` convenience wrappers.
+- Removed wrapper-specific tests.
+
+Reason:
+
+The storage layer should only provide collection persistence
+(`load*()` / `save*()`).
+
+Updating a single entity requires domain logic
+(load → modify → save), which belongs in the Context rather
+than the persistence layer.
+
+Test Suites: 5 passed, 5 total
+Tests: 26 passed, 26 total
+
+### Open question
+
+Should imported disclosures retain an optional `templateId`
+to preserve their origin, or did this become obsolete? Likewise for cards templateId: Is the relationship unnecessary?
+(I believe I wanted to track and prevent multiple accidental cloning actions later in import.)
+
 ## 🥺🍞 2026-07-17
 
 ### Finished

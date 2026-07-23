@@ -67,15 +67,6 @@ export const DisclosureStorage = {
     }
   },
 
-  async saveDisclosure(disclosure: Disclosure): Promise<boolean> {
-    try {
-      return true;
-    } catch (error) {
-      console.error("Failed to save disclosure, method saveDisclosure:", error);
-      return false;
-    }
-  },
-
   async clearDisclosures(): Promise<void> {
     try {
       await AsyncStorage.removeItem(STORAGE_KEY);

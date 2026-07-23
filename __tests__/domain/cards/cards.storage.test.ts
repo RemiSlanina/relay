@@ -144,36 +144,6 @@ jest.mock("@react-native-async-storage/async-storage", () => ({
   getItem: jest.fn().mockResolvedValue(JSON.stringify([])),
 }));
 
-describe("CardsStorage", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-  it("should save a card and call SaveCards", async () => {
-    const fakeCards = [
-      {
-        id: "usr:test",
-        title: "Hello",
-        message: "world",
-      } as Card,
-    ];
-    const cardToSave = {
-      id: "usr:test-1",
-      title: "I am a",
-      message: "mock up card.",
-    } as Card;
-
-    jest.spyOn(CardStorage, "loadCards").mockResolvedValue(fakeCards);
-    jest.spyOn(CardStorage, "saveCards").mockResolvedValue(true);
-
-    await CardStorage.saveCard(cardToSave);
-
-    expect(CardStorage.saveCards).toHaveBeenCalledWith([
-      ...fakeCards,
-      cardToSave,
-    ]);
-  });
-});
-
 // ****************** helpers ******************
 function makeTemplateCard() {
   const template: Card = {

@@ -1,3 +1,4 @@
+import { Disclosure } from "@/domain/disclosures";
 import { getFirstLaunchTime } from "../../../domain/bootstrap/first-launch";
 import { initializeDisclosures } from "../../../domain/disclosures/disclosures.import";
 
@@ -15,6 +16,7 @@ jest.mock("@react-native-async-storage/async-storage", () =>
   require("@react-native-async-storage/async-storage/jest/async-storage-mock"),
 );
 
+// that should actually go to disclosure.import.test.ts, TODO: move it when writing this test
 describe("initializeDisclosures", () => {
   it("should create user cards on first launch", async () => {
     (getFirstLaunchTime as jest.Mock).mockResolvedValue({
@@ -44,3 +46,12 @@ describe("initializeDisclosures", () => {
     expect(secondDisclosures.length).toBe(secondDisclosures.length);
   });
 });
+
+// ****************** helpers ******************
+function makeTemplateDisclosure() {
+  return {
+    id: "usr:test-2",
+    text: "I am a mocked disclosure.",
+    lastEditedAt: "2026-07-23",
+  } as Disclosure;
+}

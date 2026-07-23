@@ -121,32 +121,6 @@ export const CardStorage = {
   },
 
   /**
-   * Adds a single card to persistent storage.
-   *
-   * This is a convenience wrapper around `saveCards()`.
-   * The existing collection is loaded, the new card is appended,
-   * and the updated collection is written back to storage.
-   *
-   * FUTURE:
-   * Duplicate detection may prompt the user before saving.
-   */
-  async saveCard(card: Card): Promise<boolean> {
-    try {
-      const existingCards = await this.loadCards(); // Returns [] if no cards exist
-      if (isDuplicate(card, existingCards)) {
-        // FUTURE: should check for duplicates and
-        // prompt the user whether they want to save duplicate cards (turn off in settings)
-        console.log("Duplicate card detected: CardStorage saveCard()...");
-      }
-      const updatedCards = [...existingCards, card];
-      return this.saveCards(updatedCards);
-    } catch (e) {
-      console.error("Failed to save card, method saveCard, ", e);
-      return false;
-    }
-  },
-
-  /**
    * Loads the user's card collection.
    *
    * Returns an empty collection if no cards have been stored yet
